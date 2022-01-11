@@ -23,6 +23,8 @@ public:
 private slots:
     void on_UserInfoButton_clicked();
 
+    void on_tabWidget_tabBarClicked(int index);
+
 private:
     Ui::MainWindow *ui;
 };

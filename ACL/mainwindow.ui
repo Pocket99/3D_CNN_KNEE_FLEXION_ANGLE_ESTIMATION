@@ -14,26 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="JumpTestButton">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>200</y>
-      <width>179</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>JumpTest</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>100</y>
-      <width>301</width>
-      <height>331</height>
+      <x>60</x>
+      <y>50</y>
+      <width>681</width>
+      <height>441</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -65,41 +52,19 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-    </widget>
-    <widget class="QWidget" name="tab_3">
-     <attribute name="title">
-      <string>JumpTest</string>
+      <string>USER INFO</string>
      </attribute>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>JUMP TEST</string>
      </attribute>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="UserInfoButton">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>260</y>
-      <width>179</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>20</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>UserInfo</string>
-    </property>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>HISTORY</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -108,7 +73,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
