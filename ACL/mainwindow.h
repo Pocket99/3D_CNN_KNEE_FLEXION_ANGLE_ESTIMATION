@@ -7,7 +7,17 @@
 #include <QProxyStyle>
 #include <QPainter>
 #include <QStyleOption>
+#include <QCamera>
+#include <QCameraInfo>
+#include <QCameraViewfinder>
+#include <QCameraImageCapture>
+#include <QFileDialog>
+#include <QTimer>
 #include <userinfo.h>
+#include "opencv2/opencv.hpp"
+
+using namespace cv;
+using namespace std;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -21,11 +31,27 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_UserInfoButton_clicked();
+//    void displayImage(int , QImage image);
 
-    void on_tabWidget_tabBarClicked(int index);
+    void on_captureButton_clicked();
 
+//    void on_saveButton_clicked();
+
+    void readFrame();
+    void buttonClose();
 private:
     Ui::MainWindow *ui;
+    QImage cvMat2QImage(const Mat & mat);
+    Mat QImage2cvMat(QImage image);
+
+    QTimer *timer;
+    bool recording;
+    VideoCapture *videocapture;
+    VideoWriter write;
+    Mat matFrame;
+
+//    QCamera *camera;
+//    QCameraViewfinder *viewfinder;
+//    QCameraImageCapture *imageCapture;
 };
 #endif // MAINWINDOW_H

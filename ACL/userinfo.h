@@ -16,11 +16,7 @@ public:
     ~UserInfo();
 
 private slots:
-    void on_NameEdit_copyAvailable(bool b);
 
-    void on_pushButton_clicked();
-
-    void on_backButton_clicked();
 
 private:
     Ui::UserInfo *ui;
