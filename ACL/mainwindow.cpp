@@ -3,7 +3,7 @@
 #include <QPen>
 #include <QPainter>
 #include <QDebug>
-
+#include <iostream>
 class CustomTabStyle : public QProxyStyle
 {
 public:
@@ -67,6 +67,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(readFrame()));  // 时间到，读取当前摄像头信息
     recording = false;
     videocapture = new VideoCapture(0);
+    videocapture->set(CAP_PROP_FRAME_WIDTH,1920);
+    videocapture->set(CAP_PROP_FRAME_HEIGHT,1080);
+    std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
+    std::cout<<"height"<<videocapture->get(CAP_PROP_FRAME_HEIGHT)<<std::endl;
+
     timer->start(33);
 
     /*Databse*/
@@ -102,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(displayImage(int,QImage)));
 //    connect(ui->captureButton, SIGNAL(clicked()), this, SLOT(captureImage()));
 //    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveImage()));
-    write.open("test.avi", VideoWriter::fourcc('M', 'P', '4', '2'), 30.0, Size(640, 480), true);
+    write.open("test.avi", VideoWriter::fourcc('M', 'P', '4', '2'), 30.0, Size(1920, 1080), true);
 
 }
 
