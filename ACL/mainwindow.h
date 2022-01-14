@@ -13,8 +13,12 @@
 #include <QCameraImageCapture>
 #include <QFileDialog>
 #include <QTimer>
+#include <QSqlDatabase>
+#include <QDebug>
+#include <QString>
 #include <userinfo.h>
 #include "opencv2/opencv.hpp"
+#include "database.h"
 
 using namespace cv;
 using namespace std;
@@ -49,7 +53,7 @@ private:
     VideoCapture *videocapture;
     VideoWriter write;
     Mat matFrame;
-
+    Database *db;
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;
 //    QCameraImageCapture *imageCapture;

@@ -60,13 +60,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tabWidget->tabBar()->setStyle(new CustomTabStyle);
     //setWindowState(Qt::WindowMaximized);//max
+
+    /*camera*/
     timer = new QTimer(this);
     timer->stop();
     connect(timer, SIGNAL(timeout()), this, SLOT(readFrame()));  // 时间到，读取当前摄像头信息
     recording = false;
-
     videocapture = new VideoCapture(0);
     timer->start(33);
+
+    /*Databse*/
+    db = new Database();
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
         if (cameraInfo.deviceName() == "mycamera")
@@ -171,28 +175,7 @@ void MainWindow::on_captureButton_clicked()
 //    if(recording)timer->start(33);
 //        else timer->stop();
         recording = !recording;
-//    if(ok){
-//        ok = !ok;
-//        if(!videocapture->isOpened())
-//                videocapture->open(0);
-//            //VideoWriter write("D:\\test.avi", VideoWriter::fourcc('M', 'J', 'P', 'G'), 30.0, Size(1920, 1080), true);
-//            write.open("test.avi", VideoWriter::fourcc('M', 'P', '4', '2'), 60.0, Size(1920, 10800), true);
-//            while(1)
-//            {
-//                *videocapture >> matFrame;
-//                //设置保存视频的格式为AVI，编码为MJPG
 
-//                namedWindow("VideoPlay", WINDOW_NORMAL);
-//                imshow("VideoPlay", matFrame);
-//                waitKey(1000 / 30);
-//            }
-
-//    }else{
-
-
-//    }
-
-    //imageCapture->capture();
 }
 
 void MainWindow::readFrame()
