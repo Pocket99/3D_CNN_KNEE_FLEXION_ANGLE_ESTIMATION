@@ -102,7 +102,6 @@ background:rgb(99, 167, 255);
      </property>
      <property name="font">
       <font>
-       <family>Segoe UI</family>
        <pointsize>14</pointsize>
        <bold>true</bold>
       </font>
@@ -128,7 +127,6 @@ border-radius:10px;
       </property>
       <property name="font">
        <font>
-        <family>Segoe UI</family>
         <pointsize>9</pointsize>
         <bold>true</bold>
        </font>
@@ -156,7 +154,6 @@ border-radius:4px;
       </property>
       <property name="font">
        <font>
-        <family>Segoe UI</family>
         <pointsize>8</pointsize>
         <bold>false</bold>
         <underline>true</underline>
@@ -213,7 +210,6 @@ border-radius:4px;
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
-         <family>Segoe UI</family>
          <pointsize>12</pointsize>
          <bold>true</bold>
         </font>
