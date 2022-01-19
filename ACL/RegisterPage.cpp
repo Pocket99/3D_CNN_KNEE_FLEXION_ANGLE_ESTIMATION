@@ -28,7 +28,10 @@ void RegisterPage::on_loginBtn_clicked()
     QString username = ui->loginUsername->text();
     QString password = ui->loginPassword->text();
 
-
+    if(username==NULL || password==NULL){
+        QMessageBox::information(this,"Failed","Login Failed. Please Enter Username and Password.");
+    }
+    else{
     if(db.open()){
 
         QSqlQuery query(QSqlDatabase::database("MyConnect"));
@@ -42,26 +45,27 @@ void RegisterPage::on_loginBtn_clicked()
             QMessageBox::information(this,"Failed","Login Query Failed To Execute");
         }
         else {
-            while(query.next()){
-                QString usernameFromDB = query.value(1).toString();
-                QString passwordFromDB = query.value(2).toString();
-
-                if(usernameFromDB == username && passwordFromDB == password){
+            if(query.next()){
+//                QString usernameFromDB = query.value(1).toString();
+//                QString passwordFromDB = query.value(2).toString();
+//                if(usernameFromDB == username && passwordFromDB == password){
                     QMessageBox::information(this,"Success","Login Success");
                     ui->loginUsername->setText("");
                     ui->loginPassword->setText("");
+                    hide();
+                    mw = new MainWindow(this);
+                    mw -> show();
                 }
                 else {
-                    QMessageBox::information(this,"Failed","Login Failed");
+                    QMessageBox::information(this,"Failed","Login Failed. Invalide Username or Password");
                 }
-            }
 
         }
 
     }else {
         QMessageBox::information(this,"Not Connected","Database Connected fail");
     }
-
+}
 
 
 }
@@ -75,12 +79,17 @@ void RegisterPage::on_registerBtn_clicked()
     db.setDatabaseName("COEN490");
     db.setUserName("root");
     db.setPassword("Coen_490");
+    QString username = ui->username->text();
+    QString password = ui->password->text();
+    QString firstname = ui->firstName->text();
+    QString lastname = ui->lastName->text();
 
+    if(username==NULL || password==NULL || firstname==NULL || lastname==NULL){
+        QMessageBox::information(this,"Not Inserted","Please Provide Required Infomation");
+    }
+    else{
     if(db.open()){
-        QString username = ui->username->text();
-        QString password = ui->password->text();
-        QString firstname = ui->firstName->text();
-        QString lastname = ui->lastName->text();
+
 
         QSqlQuery qry;
         qry.prepare("INSERT INTO Doctors (username,password,dFirstName,dLastName) VALUES (:username,:password,:firstname,:lastname)");
@@ -90,7 +99,7 @@ void RegisterPage::on_registerBtn_clicked()
         qry.bindValue(":lastname",lastname);
 
         if(qry.exec()){
-            QMessageBox::information(this,"Inserted","Data Inserted Successfully");
+            QMessageBox::information(this,"Inserted","Register Success");
             ui->username->setText("");
             ui->username->setPlaceholderText("Username");
             ui->password->setText("");
@@ -107,7 +116,7 @@ void RegisterPage::on_registerBtn_clicked()
     else{
         QMessageBox::information(this,"Not Connected","Database Connected fail");
     }
-
+    }
 }
 
 
@@ -117,8 +126,5 @@ void RegisterPage::on_label_4_linkActivated(const QString &link)
 }
 
 
-void RegisterPage::on_pushButton_clicked()
-{
 
-}
 

@@ -137,6 +137,12 @@ color:white;
 background-color:rgb(255, 170, 0);
 border-radius:4px;
 }
+#loginBtn:hover{
+background-color:rgb(255, 170, 127)
+}
+#loginBtn:pressed{
+background-color:white
+}
 </string>
       </property>
       <property name="text">
@@ -224,7 +230,7 @@ border-radius:4px;
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>            Register             </string>
+     <string>           Register            </string>
     </attribute>
     <widget class="QGroupBox" name="registerForm">
      <property name="geometry">
@@ -513,6 +519,12 @@ border-radius:10px;
 color:white;
 background-color:rgb(255, 170, 0);
 border-radius:4px;
+}
+#registerBtn:hover{
+background-color:rgb(255, 170, 127)
+}
+#registerBtn:pressed{
+background-color:white
 }</string>
       </property>
       <property name="text">

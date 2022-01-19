@@ -5,6 +5,7 @@
 #include <QtSql>
 #include <QSqlDatabase>
 #include <QMessageBox>
+#include <mainwindow.h>
 
 namespace Ui {
 class RegisterPage;
@@ -25,10 +26,9 @@ private slots:
 
     void on_label_4_linkActivated(const QString &link);
 
-    void on_pushButton_clicked();
-
 private:
     Ui::RegisterPage *ui;
+    MainWindow *mw;
 };
 
 #endif // REGISTERPAGE_H
