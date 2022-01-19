@@ -7,8 +7,6 @@ RegisterPage::RegisterPage(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
-
 }
 
 RegisterPage::~RegisterPage()
