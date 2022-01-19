@@ -13,6 +13,7 @@
 #include <QCameraImageCapture>
 #include <QFileDialog>
 #include <QTimer>
+#include <QtSql>
 #include <QSqlDatabase>
 #include <QDebug>
 #include <QString>

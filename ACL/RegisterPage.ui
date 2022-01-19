@@ -79,7 +79,7 @@ background:rgb(99, 167, 255);
     <enum>QTabWidget::Triangular</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="iconSize">
     <size>
@@ -89,7 +89,7 @@ background:rgb(99, 167, 255);
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>                   Login                   </string>
+     <string>             Login             </string>
     </attribute>
     <widget class="QGroupBox" name="loginForm">
      <property name="geometry">
@@ -224,7 +224,7 @@ border-radius:4px;
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>                  Register                   </string>
+     <string>            Register             </string>
     </attribute>
     <widget class="QGroupBox" name="registerForm">
      <property name="geometry">
