@@ -74,8 +74,8 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>160</y>
+        <x>80</x>
+        <y>190</y>
         <width>761</width>
         <height>51</height>
        </rect>
@@ -87,22 +87,22 @@
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>90</y>
+        <x>80</x>
+        <y>120</y>
         <width>131</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Dear, &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Hello, &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QLabel" name="UI_DocName">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>90</y>
-        <width>91</width>
+        <x>180</x>
+        <y>120</y>
+        <width>171</width>
         <height>51</height>
        </rect>
       </property>
@@ -124,9 +124,9 @@
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>630</y>
-        <width>121</width>
-        <height>24</height>
+        <y>603</y>
+        <width>131</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
@@ -153,9 +153,9 @@
       <property name="geometry">
        <rect>
         <x>420</x>
-        <y>630</y>
-        <width>91</width>
-        <height>16</height>
+        <y>605</y>
+        <width>101</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -172,7 +172,7 @@
        <rect>
         <x>30</x>
         <y>40</y>
-        <width>1091</width>
+        <width>1041</width>
         <height>141</height>
        </rect>
       </property>
@@ -211,7 +211,7 @@
          <x>20</x>
          <y>60</y>
          <width>141</width>
-         <height>41</height>
+         <height>31</height>
         </rect>
        </property>
       </widget>
@@ -221,7 +221,7 @@
          <x>210</x>
          <y>60</y>
          <width>141</width>
-         <height>41</height>
+         <height>31</height>
         </rect>
        </property>
       </widget>
@@ -244,34 +244,47 @@
          <x>400</x>
          <y>60</y>
          <width>141</width>
-         <height>41</height>
+         <height>31</height>
         </rect>
        </property>
       </widget>
       <widget class="QPushButton" name="cleanSearchBtn">
        <property name="geometry">
         <rect>
-         <x>900</x>
-         <y>60</y>
-         <width>121</width>
-         <height>41</height>
+         <x>750</x>
+         <y>50</y>
+         <width>111</width>
+         <height>51</height>
         </rect>
        </property>
        <property name="text">
-        <string>Clean Seach</string>
+        <string>Add</string>
        </property>
       </widget>
       <widget class="QPushButton" name="searchBtn">
        <property name="geometry">
         <rect>
-         <x>690</x>
-         <y>60</y>
-         <width>121</width>
-         <height>41</height>
+         <x>600</x>
+         <y>50</y>
+         <width>111</width>
+         <height>51</height>
         </rect>
        </property>
        <property name="text">
         <string>Search</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cleanSearchBtn_2">
+       <property name="geometry">
+        <rect>
+         <x>900</x>
+         <y>50</y>
+         <width>111</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Delete</string>
        </property>
       </widget>
      </widget>
@@ -280,7 +293,7 @@
        <rect>
         <x>250</x>
         <y>220</y>
-        <width>871</width>
+        <width>821</width>
         <height>441</height>
        </rect>
       </property>
@@ -292,15 +305,16 @@
         <rect>
          <x>30</x>
          <y>30</y>
-         <width>811</width>
+         <width>761</width>
          <height>381</height>
         </rect>
        </property>
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
+       <property name="columnCount">
+        <number>0</number>
+       </property>
+       <attribute name="headerDefaultSectionSize">
+        <number>300</number>
+       </attribute>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_3">
@@ -312,30 +326,67 @@
         <height>441</height>
        </rect>
       </property>
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string notr="true"/>
+      </property>
       <property name="title">
-       <string>Edit Patient</string>
+       <string>Record Information</string>
       </property>
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>80</y>
+         <y>310</y>
          <width>93</width>
          <height>81</height>
         </rect>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string>Add</string>
+        <string>Refresh</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>250</y>
+         <y>50</y>
          <width>93</width>
          <height>81</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>180</y>
+         <width>93</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>Delete</string>

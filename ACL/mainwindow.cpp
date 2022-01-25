@@ -302,7 +302,7 @@ void MainWindow::setUsername(QString un){
     }else{
         if(query.next()){
             //qDebug() << "Doctor Name: " <<query.value(4).toString();
-            ui->UI_DocName->setText(query.value(4).toString());
+            ui->UI_DocName->setText(query.value(3).toString());
             setdID(query.value(0).toString());
             retreivePatients();
             //setTreeWidget();
@@ -366,8 +366,8 @@ void MainWindow::retreiveRecords(QString id, QTreeWidgetItem *root){
             while(query.next()){
                 QTreeWidgetItem *child1 = new QTreeWidgetItem();
                 child1->setText(0,"Record#"+query.value(0).toString());
-                child1->setText(1,"Location:"+query.value(1).toString());
-                child1->setText(2,"Date:"+query.value(2).toString());
+                child1->setText(1,"Test Location: "+query.value(1).toString());
+                child1->setText(2,"Test Date: "+query.value(2).toString());
                 root->addChild(child1);
             }
         }
