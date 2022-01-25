@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     /*Databse*/
     db = new Database();
+    getDB();
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
         if (cameraInfo.deviceName() == "mycamera")
@@ -175,6 +176,9 @@ Mat MainWindow::QImage2cvMat(QImage image)           // QImage改成Mat
     }
     return mat;
 }
+
+
+
 void MainWindow::on_captureButton_clicked()
 {
 //    if(recording)timer->start(33);
@@ -230,3 +234,147 @@ void MainWindow::buttonClose()
 //{
 //        ui->ImageCapture->setPixmap(QPixmap::fromImage(image));
 //}
+
+void MainWindow::on_searchBtn_clicked()
+{
+
+}
+
+void MainWindow::getDB(){
+    sqldb = QSqlDatabase::database("MyConnect");
+    //qDebug()<<sqldb.open();
+    QSqlQuery query(sqldb);
+
+}
+
+void MainWindow::setTreeWidget(){
+//    ui->treeWidget->setColumnCount(3);
+//    QStringList labels;
+//    labels << "First Name" << "Last Name" << "Date of Birth";
+//    ui->treeWidget->setHeaderLabels(labels);
+
+//    QTreeWidgetItem *root1 = new QTreeWidgetItem(ui->treeWidget);
+//    root1->setText(0,"P1FirstName");
+//    root1->setText(1,"P1LastName");
+//    root1->setText(2,"P1DOB");
+//    ui->treeWidget->addTopLevelItem(root1);
+
+//    QTreeWidgetItem *child11 = new QTreeWidgetItem();
+//    child11->setText(0,"Record#");
+//    child11->setText(1,"Location:");
+//    child11->setText(2,"Date:");
+//    root1->addChild(child11);
+
+//    QTreeWidgetItem *child12 = new QTreeWidgetItem();
+//    child12->setText(0,"Record#");
+//    child12->setText(1,"Location:");
+//    child12->setText(2,"Date:");
+//    root1->addChild(child12);
+
+//    QTreeWidgetItem *root2 = new QTreeWidgetItem(ui->treeWidget);
+//    root2->setText(0,"P1FirstName");
+//    root2->setText(1,"P1LastName");
+//    root2->setText(2,"P1DOB");
+//    ui->treeWidget->addTopLevelItem(root2);
+
+//    QTreeWidgetItem *child21 = new QTreeWidgetItem();
+//    child21->setText(0,"Record#");
+//    child21->setText(1,"Location:");
+//    child21->setText(2,"Date:");
+//    root2->addChild(child21);
+
+}
+
+
+void MainWindow::setUsername(QString un){
+    Username = un;
+
+    QSqlQuery query(sqldb);
+
+    if(sqldb.open()){
+    QString queryscript = "SELECT * FROM Doctors WHERE username =";
+    queryscript += "'"+Username+"'";
+    //query.exec(queryscript);
+
+    if(!query.exec(queryscript)){
+        //qDebug()<<query.lastError().text();
+        QMessageBox::information(this,"Failed","query.exec not running");
+    }else{
+        if(query.next()){
+            //qDebug() << "Doctor Name: " <<query.value(4).toString();
+            ui->UI_DocName->setText(query.value(4).toString());
+            setdID(query.value(0).toString());
+            retreivePatients();
+            //setTreeWidget();
+
+        }else{
+            printf("Doctor Name not found");
+            }
+    }
+    }else{
+        printf("open sqldb failed");
+    }
+
+}
+
+void MainWindow::retreivePatients(){
+        QSqlQuery query(sqldb);
+
+        ui->treeWidget->setColumnCount(3);
+        QStringList labels;
+        labels << "First Name" << "Last Name" << "Date of Birth";
+        ui->treeWidget->setHeaderLabels(labels);
+
+        if(sqldb.open()){
+        QString queryscript = "SELECT * FROM Patients WHERE docID =";
+        queryscript += dID;
+        //query.exec(queryscript);
+
+        if(!query.exec(queryscript)){
+            //qDebug()<<query.lastError().text();
+            QMessageBox::information(this,"Failed","query.exec not running");
+        }else{
+            while(query.next()){
+                //qDebug() << "Patient Name: " <<query.value(1).toString();
+
+                QTreeWidgetItem *root1 = new QTreeWidgetItem(ui->treeWidget);
+                root1->setText(0,query.value(1).toString());
+                root1->setText(1,query.value(2).toString());
+                root1->setText(2,query.value(3).toString());
+                ui->treeWidget->addTopLevelItem(root1);
+
+                retreiveRecords(query.value(0).toString(), root1);
+
+            }
+        }
+        }else{
+            printf("open sqldb failed");
+        }
+
+}
+
+void MainWindow::retreiveRecords(QString id, QTreeWidgetItem *root){
+    QSqlQuery query(sqldb);
+
+    if(sqldb.open()){
+        QString queryscript1 = "SELECT * FROM Records WHERE pID =";
+        queryscript1 += id;
+        if(!query.exec(queryscript1)){
+            //qDebug()<<query.lastError().text();
+            QMessageBox::information(this,"Failed","retreive record query not running");
+        }else{
+            while(query.next()){
+                QTreeWidgetItem *child1 = new QTreeWidgetItem();
+                child1->setText(0,"Record#"+query.value(0).toString());
+                child1->setText(1,"Location:"+query.value(1).toString());
+                child1->setText(2,"Date:"+query.value(2).toString());
+                root->addChild(child1);
+            }
+        }
+    }
+}
+
+void MainWindow::setdID(QString id){
+    dID = id;
+}
+

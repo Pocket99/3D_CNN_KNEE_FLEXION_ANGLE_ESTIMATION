@@ -20,6 +20,8 @@
 #include <userinfo.h>
 #include "opencv2/opencv.hpp"
 #include "database.h"
+#include <QTreeWidgetItem>
+#include <QMessageBox>
 
 using namespace cv;
 using namespace std;
@@ -34,6 +36,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setUsername(QString);
+    void getDB();
+    void retreivePatients();
+    void retreiveRecords(QString,QTreeWidgetItem*);
+    void setdID(QString);
+
 
 private slots:
 //    void displayImage(int , QImage image);
@@ -44,17 +52,24 @@ private slots:
 
     void readFrame();
     void buttonClose();
+    void on_searchBtn_clicked();
+    void setTreeWidget();
+
 private:
     Ui::MainWindow *ui;
     QImage cvMat2QImage(const Mat & mat);
     Mat QImage2cvMat(QImage image);
-
     QTimer *timer;
     bool recording;
     VideoCapture *videocapture;
     VideoWriter write;
     Mat matFrame;
     Database *db;
+
+    QString Username;
+    QString dID;
+    QSqlDatabase sqldb;
+
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;
 //    QCameraImageCapture *imageCapture;

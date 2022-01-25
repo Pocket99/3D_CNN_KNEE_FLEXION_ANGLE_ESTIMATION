@@ -52,6 +52,7 @@ void RegisterPage::on_loginBtn_clicked()
                     ui->loginPassword->setText("");
                     hide();
                     mw = new MainWindow(this);
+                    mw->setUsername(username);
                     mw -> show();
                 }
                 else {
@@ -83,13 +84,31 @@ void RegisterPage::on_registerBtn_clicked()
     QString lastname = ui->lastName->text();
 
     if(username==NULL || password==NULL || firstname==NULL || lastname==NULL){
-        QMessageBox::information(this,"Not Inserted","Please Provide Required Infomation");
+        QMessageBox::information(this,"Register Failed","Please Provide Required Infomation");
     }
     else{
     if(db.open()){
-
-
+        QSqlQuery check;
         QSqlQuery qry;
+        check.prepare(QString("SELECT * FROM Doctors WHERE username = :username"));
+        check.bindValue(":username",username);
+        if(!check.exec()){
+            QMessageBox::information(this,"Failed","Login Query Failed To Execute");
+        }
+        else {
+        if(check.next()){
+            QMessageBox::information(this,"Register Failed","Username already in used");
+            ui->username->setText("");
+            ui->username->setPlaceholderText("Username");
+            ui->password->setText("");
+            ui->password->setPlaceholderText("Password");
+            ui->firstName->setText("");
+            ui->firstName->setPlaceholderText("First Name");
+            ui->lastName->setText("");
+            ui->lastName->setPlaceholderText("Last Name");
+        }
+        else{
+
         qry.prepare("INSERT INTO Doctors (username,password,dFirstName,dLastName) VALUES (:username,:password,:firstname,:lastname)");
         qry.bindValue(":username",username);
         qry.bindValue(":password",password);
@@ -110,6 +129,8 @@ void RegisterPage::on_registerBtn_clicked()
         }else {
             QMessageBox::information(this,"Not Inserted","Data Inserted failed");
         }
+    }
+    }
     }
     else{
         QMessageBox::information(this,"Not Connected","Database Connected fail");
