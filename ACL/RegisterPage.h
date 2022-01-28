@@ -1,10 +1,14 @@
 #ifndef REGISTERPAGE_H
 #define REGISTERPAGE_H
 
+#include <QSqlDatabase>
+#include <QDebug>
+#include <QString>
+#include <QSqlQuery>
+#include <QMessageBox>
 #include <QDialog>
 #include <QtSql>
-#include <QSqlDatabase>
-#include <QMessageBox>
+
 #include <mainwindow.h>
 
 namespace Ui {
@@ -18,7 +22,7 @@ class RegisterPage : public QDialog
 public:
     explicit RegisterPage(QWidget *parent = nullptr);
     ~RegisterPage();
-
+    void cleanRegUI();
 private slots:
     void on_loginBtn_clicked();
 
@@ -26,9 +30,11 @@ private slots:
 
     void on_label_4_linkActivated(const QString &link);
 
+
 private:
     Ui::RegisterPage *ui;
     MainWindow *mw;
+    QSqlDatabase db;
 };
 
 #endif // REGISTERPAGE_H
