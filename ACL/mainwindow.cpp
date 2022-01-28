@@ -348,9 +348,9 @@ void MainWindow::on_searchBtn_clicked()
     //item = ui->treeWidget->topLevelItem(0);
     QString firstName = ui->hfirstName->text();
     QString lastName = ui->hlastName->text();
-    //QString dob = ui->hDOB->text();
+    QString dob = ui->hDOB->text();
     //qDebug()<<ui->treeWidget->topLevelItemCount();
-    if(firstName == NULL && lastName == NULL){
+    if(firstName == NULL && lastName == NULL && dob == NULL){
         delete item;
         retreivePatients();
     }else{
@@ -379,6 +379,26 @@ void MainWindow::on_searchBtn_clicked()
                 item = ui->treeWidget->topLevelItem(i);
                 qDebug()<<item->text(1);
                 if(item->text(1)!=lastName){
+                    int count = item->childCount();
+                    if(count == 0){
+                    delete item;
+                    --i;
+                    }else{
+                        for(int j =0;j<count;j++){
+                            QTreeWidgetItem *childItem = item->child(j);
+                            delete childItem; //->parent()-?takeChild(ui->treeWidget->currentIndex().row());
+                        }
+                        delete item;
+                        --i;
+                    }
+                }
+            }
+        }
+        if(dob!=NULL){
+            for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
+                item = ui->treeWidget->topLevelItem(i);
+                qDebug()<<item->text(2);
+                if(item->text(2)!=dob){
                     int count = item->childCount();
                     if(count == 0){
                     delete item;

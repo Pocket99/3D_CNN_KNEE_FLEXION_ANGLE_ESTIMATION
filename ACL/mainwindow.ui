@@ -178,7 +178,7 @@
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>HISTORY</string>
+      <string>RECORD</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
@@ -208,7 +208,7 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>290</x>
+         <x>280</x>
          <y>30</y>
          <width>101</width>
          <height>20</height>
@@ -221,7 +221,7 @@
       <widget class="QPushButton" name="searchBtn">
        <property name="geometry">
         <rect>
-         <x>590</x>
+         <x>760</x>
          <y>50</y>
          <width>111</width>
          <height>61</height>
@@ -244,7 +244,7 @@
       <widget class="QLineEdit" name="hlastName">
        <property name="geometry">
         <rect>
-         <x>290</x>
+         <x>280</x>
          <y>60</y>
          <width>181</width>
          <height>41</height>
@@ -254,7 +254,7 @@
       <widget class="QPushButton" name="resetBtn">
        <property name="geometry">
         <rect>
-         <x>820</x>
+         <x>910</x>
          <y>50</y>
          <width>111</width>
          <height>61</height>
@@ -262,6 +262,42 @@
        </property>
        <property name="text">
         <string>Reset Search</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>540</x>
+         <y>30</y>
+         <width>101</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Date of Birth</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="hDOB">
+       <property name="geometry">
+        <rect>
+         <x>540</x>
+         <y>60</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>540</x>
+         <y>100</y>
+         <width>121</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>( yyyy-mm-dd )</string>
        </property>
       </widget>
      </widget>
