@@ -235,55 +235,20 @@ void MainWindow::buttonClose()
 //        ui->ImageCapture->setPixmap(QPixmap::fromImage(image));
 //}
 
-void MainWindow::on_searchBtn_clicked()
-{
-
-}
-
 void MainWindow::getDB(){
     sqldb = QSqlDatabase::database("MyConnect");
     //qDebug()<<sqldb.open();
-    QSqlQuery query(sqldb);
+    //QSqlQuery query(sqldb);
 
 }
 
-void MainWindow::setTreeWidget(){
-//    ui->treeWidget->setColumnCount(3);
-//    QStringList labels;
-//    labels << "First Name" << "Last Name" << "Date of Birth";
-//    ui->treeWidget->setHeaderLabels(labels);
+//void MainWindow::setTreeWidget(QTreeWidget rec){
+//    record->rec;
+//}
 
-//    QTreeWidgetItem *root1 = new QTreeWidgetItem(ui->treeWidget);
-//    root1->setText(0,"P1FirstName");
-//    root1->setText(1,"P1LastName");
-//    root1->setText(2,"P1DOB");
-//    ui->treeWidget->addTopLevelItem(root1);
-
-//    QTreeWidgetItem *child11 = new QTreeWidgetItem();
-//    child11->setText(0,"Record#");
-//    child11->setText(1,"Location:");
-//    child11->setText(2,"Date:");
-//    root1->addChild(child11);
-
-//    QTreeWidgetItem *child12 = new QTreeWidgetItem();
-//    child12->setText(0,"Record#");
-//    child12->setText(1,"Location:");
-//    child12->setText(2,"Date:");
-//    root1->addChild(child12);
-
-//    QTreeWidgetItem *root2 = new QTreeWidgetItem(ui->treeWidget);
-//    root2->setText(0,"P1FirstName");
-//    root2->setText(1,"P1LastName");
-//    root2->setText(2,"P1DOB");
-//    ui->treeWidget->addTopLevelItem(root2);
-
-//    QTreeWidgetItem *child21 = new QTreeWidgetItem();
-//    child21->setText(0,"Record#");
-//    child21->setText(1,"Location:");
-//    child21->setText(2,"Date:");
-//    root2->addChild(child21);
-
-}
+//QTreeWidget MainWindow::getTreeWidget(){
+//    return record;
+//}
 
 
 void MainWindow::setUsername(QString un){
@@ -350,7 +315,7 @@ void MainWindow::retreivePatients(){
         }else{
             printf("open sqldb failed");
         }
-
+        //setTreeWidget(ui->treeWidget);
 }
 
 void MainWindow::retreiveRecords(QString id, QTreeWidgetItem *root){
@@ -378,3 +343,90 @@ void MainWindow::setdID(QString id){
     dID = id;
 }
 
+void MainWindow::on_searchBtn_clicked()
+{   QTreeWidgetItem *item;
+    //item = ui->treeWidget->topLevelItem(0);
+    QString firstName = ui->hfirstName->text();
+    QString lastName = ui->hlastName->text();
+    //QString dob = ui->hDOB->text();
+    //qDebug()<<ui->treeWidget->topLevelItemCount();
+    if(firstName == NULL && lastName == NULL){
+        delete item;
+        retreivePatients();
+    }else{
+        if(firstName!=NULL){
+        for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
+            item = ui->treeWidget->topLevelItem(i);
+            qDebug()<<item->text(0);
+            if(item->text(0)!=firstName){
+                int count = item->childCount();
+                if(count == 0){
+                delete item;
+                --i;
+                }else{
+                    for(int j =0;j<count;j++){
+                        QTreeWidgetItem *childItem = item->child(j);
+                        delete childItem; //->parent()-?takeChild(ui->treeWidget->currentIndex().row());
+                    }
+                    delete item;
+                    --i;
+                }
+            }
+        }
+        }
+        if(lastName!=NULL){
+            for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
+                item = ui->treeWidget->topLevelItem(i);
+                qDebug()<<item->text(1);
+                if(item->text(1)!=lastName){
+                    int count = item->childCount();
+                    if(count == 0){
+                    delete item;
+                    --i;
+                    }else{
+                        for(int j =0;j<count;j++){
+                            QTreeWidgetItem *childItem = item->child(j);
+                            delete childItem; //->parent()-?takeChild(ui->treeWidget->currentIndex().row());
+                        }
+                        delete item;
+                        --i;
+                    }
+                }
+            }
+        }
+
+}
+
+}
+
+
+
+void MainWindow::on_resetBtn_clicked()
+{
+    ui->hfirstName->setText("");;
+    ui->hlastName->setText("");;
+    QTreeWidgetItem *item;
+    for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
+        item = ui->treeWidget->topLevelItem(i);
+        int count = item->childCount();
+        if(count == 0){
+            delete item;
+            --i;
+         }else{
+             for(int j =0;j<count;j++){
+                 QTreeWidgetItem *childItem = item->child(j);
+                 delete childItem; //->parent()-?takeChild(ui->treeWidget->currentIndex().row());
+              }
+              delete item;
+              --i;
+           }
+        }
+
+    retreivePatients();
+
+}
+
+void MainWindow::on_addBtn_clicked()
+{
+
+}

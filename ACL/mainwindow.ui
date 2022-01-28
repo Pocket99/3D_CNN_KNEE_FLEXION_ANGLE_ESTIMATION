@@ -162,6 +162,19 @@
        <string>RECORDING</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="captureButton_2">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>600</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Add To Record</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -195,7 +208,7 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>210</x>
+         <x>290</x>
          <y>30</y>
          <width>101</width>
          <height>20</height>
@@ -205,86 +218,50 @@
         <string>Last Name</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="hfirstName">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>60</y>
-         <width>141</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="hlastName">
-       <property name="geometry">
-        <rect>
-         <x>210</x>
-         <y>60</y>
-         <width>141</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_4">
-       <property name="geometry">
-        <rect>
-         <x>400</x>
-         <y>30</y>
-         <width>101</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Date of Birth</string>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="hDOB">
-       <property name="geometry">
-        <rect>
-         <x>400</x>
-         <y>60</y>
-         <width>141</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="cleanSearchBtn">
-       <property name="geometry">
-        <rect>
-         <x>750</x>
-         <y>50</y>
-         <width>111</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Add</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="searchBtn">
        <property name="geometry">
         <rect>
-         <x>600</x>
+         <x>590</x>
          <y>50</y>
          <width>111</width>
-         <height>51</height>
+         <height>61</height>
         </rect>
        </property>
        <property name="text">
         <string>Search</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="cleanSearchBtn_2">
+      <widget class="QLineEdit" name="hfirstName">
        <property name="geometry">
         <rect>
-         <x>900</x>
+         <x>20</x>
+         <y>60</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="hlastName">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>60</y>
+         <width>181</width>
+         <height>41</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="resetBtn">
+       <property name="geometry">
+        <rect>
+         <x>820</x>
          <y>50</y>
          <width>111</width>
-         <height>51</height>
+         <height>61</height>
         </rect>
        </property>
        <property name="text">
-        <string>Delete</string>
+        <string>Reset Search</string>
        </property>
       </widget>
      </widget>
@@ -335,11 +312,11 @@
       <property name="title">
        <string>Record Information</string>
       </property>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="refreshBtn">
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>310</y>
+         <y>300</y>
          <width>93</width>
          <height>81</height>
         </rect>
@@ -353,28 +330,7 @@
         <string>Refresh</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>50</y>
-         <width>93</width>
-         <height>81</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="acceptDrops">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>Add</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="deleteBtn">
        <property name="geometry">
         <rect>
          <x>40</x>
@@ -390,6 +346,24 @@
        </property>
        <property name="text">
         <string>Delete</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="addBtn">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>60</y>
+         <width>93</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Add</string>
        </property>
       </widget>
      </widget>

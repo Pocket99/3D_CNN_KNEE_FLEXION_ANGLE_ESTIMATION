@@ -41,6 +41,8 @@ public:
     void retreivePatients();
     void retreiveRecords(QString,QTreeWidgetItem*);
     void setdID(QString);
+    void setTreeWidget(QTreeWidget);
+    QTreeWidget getTreeWidget();
 
 
 private slots:
@@ -53,7 +55,11 @@ private slots:
     void readFrame();
     void buttonClose();
     void on_searchBtn_clicked();
-    void setTreeWidget();
+
+
+    void on_addBtn_clicked();
+
+    void on_resetBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -65,6 +71,7 @@ private:
     VideoWriter write;
     Mat matFrame;
     Database *db;
+    QTreeWidget record;
 
     QString Username;
     QString dID;
