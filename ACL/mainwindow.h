@@ -70,9 +70,7 @@ private:
     VideoCapture *videocapture;
     VideoWriter write;
     Mat matFrame;
-    Database *db;
     QTreeWidget record;
-
     QString Username;
     QString dID;
     QSqlDatabase sqldb;

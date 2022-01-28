@@ -50,9 +50,10 @@ void RegisterPage::on_loginBtn_clicked()
                     ui->loginUsername->setText("");
                     ui->loginPassword->setText("");
                     hide();
-                    mw = new MainWindow(this);
-                    mw->setUsername(username);
-                    mw -> show();
+                    mw.getDB();
+                    mw.setUsername(username);
+                    mw.show();
+
                 }
                 else {
                     QMessageBox::information(this,"Failed","Login Failed. Invalide Username or Password");

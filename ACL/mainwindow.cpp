@@ -75,8 +75,6 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(33);
 
     /*Databse*/
-    db = new Database();
-    getDB();
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
         if (cameraInfo.deviceName() == "mycamera")

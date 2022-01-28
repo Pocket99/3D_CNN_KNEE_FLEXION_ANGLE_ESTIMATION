@@ -33,7 +33,7 @@ private slots:
 
 private:
     Ui::RegisterPage *ui;
-    MainWindow *mw;
+    MainWindow mw;
     QSqlDatabase db;
 };
 
