@@ -42,6 +42,7 @@ public:
     void retreiveRecords(QString,QTreeWidgetItem*);
     void setdID(QString);
     void setTreeWidget(QTreeWidget);
+    void initPatientList();
     QTreeWidget getTreeWidget();
 
 
@@ -60,6 +61,10 @@ private slots:
     void on_addBtn_clicked();
 
     void on_resetBtn_clicked();
+
+    void on_patientList_activated(int index);
+
+    void on_addRecord_clicked();
 
 private:
     Ui::MainWindow *ui;

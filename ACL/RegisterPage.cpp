@@ -52,7 +52,9 @@ void RegisterPage::on_loginBtn_clicked()
                     hide();
                     mw.getDB();
                     mw.setUsername(username);
+                    mw.initPatientList();
                     mw.show();
+
 
                 }
                 else {

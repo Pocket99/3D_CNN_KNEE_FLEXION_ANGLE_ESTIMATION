@@ -235,6 +235,7 @@ void MainWindow::buttonClose()
 
 void MainWindow::getDB(){
     sqldb = QSqlDatabase::database("MyConnect");
+
     //qDebug()<<sqldb.open();
     //QSqlQuery query(sqldb);
 
@@ -448,3 +449,53 @@ void MainWindow::on_addBtn_clicked()
 {
 
 }
+
+void MainWindow::on_patientList_activated(int index)
+{
+
+}
+
+void MainWindow::initPatientList(){
+    std::cout<<"patientlist init"<<std::endl;
+    QTreeWidgetItem* item;
+    for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
+        item = ui->treeWidget->topLevelItem(i);
+        QString s(item->text(0));
+        qDebug()<<item->text(0);
+        ui->patientList->addItem(s);
+    }
+
+}
+
+void MainWindow::on_addRecord_clicked()
+{
+    QString location= "", date = "0000-00-00";
+    int pID= 0;
+    QString patient_name = ui->patientList->currentText();
+    qDebug().noquote()<<"patient name"<<patient_name;
+    QString queryscript = QString("SELECT pID FROM Patients WHERE pFirstName ='%1'").arg(patient_name);
+    QSqlQuery query(sqldb);
+
+    if(!query.exec(queryscript)){
+        //qDebug()<<query.lastError().text();
+        QMessageBox::information(this,"Failed","patient not found");
+    }else{
+        while(query.next()){
+            pID = query.value(0).toInt();
+        }
+
+    }
+    /**/
+    location = ui->locationEdit->text();
+    date = ui->dateEdit->text();
+    qDebug().noquote()<<"pID"<<pID<<"location"<<location<<"date"<<date;
+    queryscript = QString("INSERT INTO `COEN490`.`Records` (`location`, `rDate`, `pID`) VALUES ('%1', '%2', '%3');").arg(location).arg(date).arg(pID);
+    if(!query.exec(queryscript)){
+        //qDebug()<<query.lastError().text();
+        QMessageBox::information(this,"Failed","New Record Add Failed");
+    }else{
+        QMessageBox::information(this,"Scuuess","New Record Added");
+    }
+
+}
+
