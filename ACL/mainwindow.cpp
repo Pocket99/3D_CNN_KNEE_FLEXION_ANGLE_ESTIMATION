@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <iostream>
+#include <string>
 class CustomTabStyle : public QProxyStyle
 {
 public:
@@ -292,7 +293,6 @@ void MainWindow::retreivePatients(){
         if(sqldb.open()){
         QString queryscript = "SELECT * FROM Patients WHERE docID =";
         queryscript += dID;
-        //query.exec(queryscript);
 
         if(!query.exec(queryscript)){
             //qDebug()<<query.lastError().text();
@@ -422,8 +422,9 @@ void MainWindow::on_searchBtn_clicked()
 
 void MainWindow::on_resetBtn_clicked()
 {
-    ui->hfirstName->setText("");;
-    ui->hlastName->setText("");;
+    ui->hfirstName->setText("");
+    ui->hlastName->setText("");
+    ui->hDOB->setText("");
     QTreeWidgetItem *item;
     for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
         item = ui->treeWidget->topLevelItem(i);
@@ -447,7 +448,148 @@ void MainWindow::on_resetBtn_clicked()
 
 void MainWindow::on_addBtn_clicked()
 {
+    QString firstName = ui->hfirstName->text();
+    QString lastName = ui->hlastName->text();
+    QString dob = ui->hDOB->text();
+    if(firstName == NULL || lastName == NULL || dob == NULL){
+        QMessageBox::information(this,"Patient Add Failed","If want to add a patient, please enter all Patient Information.");
+    }
+    else{
+        QMessageBox::StandardButton reply;
+        QString ifadd = "Confirm Adding New Patient.\nFirstname: "+firstName+"\nLastname: "+lastName+"\nDate of Birth: "+dob;
+          reply = QMessageBox::question(this, "Add New Patient", ifadd,
+                                        QMessageBox::Yes|QMessageBox::No);
+          if (reply == QMessageBox::Yes) {
+              QSqlQuery query(sqldb);
+              if(sqldb.open()){
+                  query.prepare("SELECT * FROM Patients WHERE pFirstName = :firstname AND pLastName = :lastname AND pDOB = :dob AND docID = :docID");
+                  query.bindValue(":firstname",firstName);
+                  query.bindValue(":lastname",lastName);
+                  query.bindValue(":dob",dob);
+                  query.bindValue(":docID",dID);
+              if(!query.exec()){
+                  QMessageBox::information(this,"Failed","query.exec not running");
+              }else{
+                  if(query.next()){
+                      QMessageBox::information(this,"Patient Add Failed","Patient already exist");
+                      ui->hfirstName->setText("");
+                      ui->hlastName->setText("");
+                      ui->hDOB->setText("");
+                  }else{
+                      query.prepare("INSERT INTO Patients (pFirstName,pLastName,pDOB,docID) VALUES (:firstname,:lastname,:dob,:docID)");
+                      query.bindValue(":firstname",firstName);
+                      query.bindValue(":lastname",lastName);
+                      query.bindValue(":dob",dob);
+                      query.bindValue(":docID",dID);
 
+                      if(query.exec()){
+                          QTreeWidgetItem *root1 = new QTreeWidgetItem(ui->treeWidget);
+                          root1->setText(0,firstName);
+                          root1->setText(1,lastName);
+                          root1->setText(2,dob);
+                          ui->treeWidget->addTopLevelItem(root1);
+                          //ui->patientList->clear();
+                          initPatientList();
+                          QMessageBox::information(this,"Patient Add Success","Patient added");
+                          ui->hfirstName->setText("");
+                          ui->hlastName->setText("");
+                          ui->hDOB->setText("");
+                      }
+                      else{
+                          QMessageBox::information(this,"Patient Add Failed","Patient add query run failed");
+                      }
+                  }
+
+              }
+
+          }
+          } else {
+            qDebug() << "Yes was *not* clicked";
+          }
+
+
+}
+}
+
+void MainWindow::on_deleteBtn_clicked()
+{
+    QSqlQuery query(sqldb);
+    QTreeWidgetItem *sel_item = ui->treeWidget->currentItem();
+    int count = sel_item->childCount();
+    if(count==0){
+        QMessageBox::StandardButton reply;
+          reply = QMessageBox::question(this, "Warning", "Are you sure you want to delete the selected Record?",
+                                        QMessageBox::Yes|QMessageBox::No);
+          if (reply == QMessageBox::Yes) {
+              if(sel_item->parent()==nullptr){
+                  QString firstName = sel_item->text(0);
+                  QString lastName = sel_item->text(1);
+                  QString dob = sel_item->text(2);
+                  qDebug()<<firstName<<lastName<<dob;
+
+                  if(sqldb.open()){
+                      query.prepare("DELETE FROM Patients WHERE pFirstName = :firstname AND pLastName = :lastname AND pDOB = :dob AND docID = :docID");
+                      query.bindValue(":firstname",firstName);
+                      query.bindValue(":lastname",lastName);
+                      query.bindValue(":dob",dob);
+                      query.bindValue(":docID",dID);
+                  if(!query.exec()){
+                      QMessageBox::information(this,"Failed","query.exec not running.");
+                  }else{
+                      clearTreeWidget();
+                      retreivePatients();
+                      initPatientList();
+                      QMessageBox::information(this,"Success","Patient Deleted.");
+
+                  }
+
+              }
+              }
+              else{
+                  QString info1 = sel_item->text(0);
+                  int l = info1.length();
+                  QString recordID = info1.mid(7,l-7);
+                  QString info2 = sel_item->text(1);
+                  l = info2.length();
+                  QString location = info2.mid(15,l-15);
+                  QString info3 = sel_item->text(2);
+                  l = info3.length();
+                  QString recordDate = info3.mid(11,l-11);
+                  //qDebug()<<recordID<<location<<recordDate;
+                  //QMessageBox::information(this,"Success","sel_item is a child");
+                  if(sqldb.open()){
+                      query.prepare("DELETE FROM Records WHERE rID = :recID AND location = :recLoc AND rDate = :recDate");
+                      query.bindValue(":recID",recordID);
+                      query.bindValue(":recLoc",location);
+                      query.bindValue(":recDate",recordDate);
+                  if(!query.exec()){
+                      QMessageBox::information(this,"Failed","query.exec not running.");
+                  }else{
+                      clearTreeWidget();
+                      retreivePatients();
+                      initPatientList();
+                      QMessageBox::information(this,"Success","Record Deleted.");
+
+                  }
+
+              }
+              }
+
+        }
+          else {
+       qDebug() << "Yes was *not* clicked";
+     }
+    }else{
+        QMessageBox::StandardButton reply;
+          reply = QMessageBox::question(this, "Warning", "Are you sure you want to delete the patient and his/her test records??",
+                                        QMessageBox::Yes|QMessageBox::No);
+          if (reply == QMessageBox::Yes) {
+            qDebug() << "Yes was clicked";
+
+          } else {
+            qDebug() << "Yes was *not* clicked";
+          }
+    }
 }
 
 void MainWindow::on_patientList_activated(int index)
@@ -458,6 +600,7 @@ void MainWindow::on_patientList_activated(int index)
 void MainWindow::initPatientList(){
     std::cout<<"patientlist init"<<std::endl;
     QTreeWidgetItem* item;
+    ui->patientList->clear();
     for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
         item = ui->treeWidget->topLevelItem(i);
         QString s(item->text(0));
@@ -498,4 +641,33 @@ void MainWindow::on_addRecord_clicked()
     }
 
 }
+
+
+void MainWindow::on_refreshBtn_clicked()
+{
+    clearTreeWidget();
+    retreivePatients();
+}
+
+void MainWindow::clearTreeWidget(){
+    QTreeWidgetItem *item;
+    for (int i=0;i<ui->treeWidget->topLevelItemCount();i++){
+        item = ui->treeWidget->topLevelItem(i);
+        int count = item->childCount();
+        if(count == 0){
+            delete item;
+            --i;
+         }else{
+             for(int j =0;j<count;j++){
+                 QTreeWidgetItem *childItem = item->child(j);
+                 delete childItem; //->parent()-?takeChild(ui->treeWidget->currentIndex().row());
+              }
+              delete item;
+              --i;
+           }
+        }
+}
+
+
+
 

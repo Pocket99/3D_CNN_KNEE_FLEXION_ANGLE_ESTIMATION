@@ -44,6 +44,7 @@ public:
     void setTreeWidget(QTreeWidget);
     void initPatientList();
     QTreeWidget getTreeWidget();
+    void clearTreeWidget();
 
 
 private slots:
@@ -65,6 +66,10 @@ private slots:
     void on_patientList_activated(int index);
 
     void on_addRecord_clicked();
+
+    void on_refreshBtn_clicked();
+
+    void on_deleteBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
