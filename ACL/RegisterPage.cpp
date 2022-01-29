@@ -46,13 +46,14 @@ void RegisterPage::on_loginBtn_clicked()
 //                QString usernameFromDB = query.value(1).toString();
 //                QString passwordFromDB = query.value(2).toString();
 //                if(usernameFromDB == username && passwordFromDB == password){
-                    //QMessageBox::information(this,"Success","Login Success");
-                    ui->loginUsername->setText("");
-                    ui->loginPassword->setText("");
-                    hide();
+
+//                    ui->loginUsername->setText("");
+//                    ui->loginPassword->setText("");
                     mw.getDB();
                     mw.setUsername(username);
                     mw.initPatientList();
+                    QMessageBox::information(this,"Success","Login Success");
+                    hide();
                     mw.show();
 
 
