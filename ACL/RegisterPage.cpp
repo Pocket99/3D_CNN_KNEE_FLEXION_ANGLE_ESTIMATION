@@ -86,12 +86,12 @@ void RegisterPage::on_registerBtn_clicked()
     }
     else{
         if(db.open()){
-            QSqlQuery check;
-            QSqlQuery qry;
+            QSqlQuery check(QSqlDatabase::database("MyConnect"));
+            QSqlQuery qry(QSqlDatabase::database("MyConnect"));
             check.prepare(QString("SELECT * FROM Doctors WHERE username = :username"));
             check.bindValue(":username",username);
             if(!check.exec()){
-                QMessageBox::information(this,"Failed","Login Query Failed To Execute");
+                QMessageBox::information(this,"Failed","Register check Query Failed To Execute");
             }
             else {
                 if(check.next()){

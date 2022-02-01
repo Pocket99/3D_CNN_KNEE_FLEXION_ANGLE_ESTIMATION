@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer->stop();
     connect(timer, SIGNAL(timeout()), this, SLOT(readFrame()));  // 时间到，读取当前摄像头信息
     recording = false;
-    videocapture = new VideoCapture(0);
+    videocapture = new VideoCapture(1);
     videocapture->set(CAP_PROP_FRAME_WIDTH,1920);
     videocapture->set(CAP_PROP_FRAME_HEIGHT,1080);
     std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(displayImage(int,QImage)));
 //    connect(ui->captureButton, SIGNAL(clicked()), this, SLOT(captureImage()));
 //    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveImage()));
-    write.open("test.avi", VideoWriter::fourcc('M', 'P', '4', '2'), 30.0, Size(1920, 1080), true);
+    write.open("test.avi", VideoWriter::fourcc('M', 'P', '4', '2'), 60.0, Size(1920, 1080), true);
 
 }
 
@@ -182,7 +182,12 @@ void MainWindow::on_captureButton_clicked()
 {
 //    if(recording)timer->start(33);
 //        else timer->stop();
+    if (recording)
         recording = !recording;
+    else{
+        //do nothing;
+    }
+
 
 }
 

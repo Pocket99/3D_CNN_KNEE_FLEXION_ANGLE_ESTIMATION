@@ -44,7 +44,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -114,39 +114,13 @@
      <attribute name="title">
       <string>JUMP TEST</string>
      </attribute>
-     <widget class="QPushButton" name="captureButton">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>600</y>
-        <width>131</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Record</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="recordingLabel">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>600</y>
-        <width>101</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>RECORDING</string>
-      </property>
-     </widget>
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
         <x>850</x>
-        <y>180</y>
+        <y>220</y>
         <width>281</width>
-        <height>391</height>
+        <height>421</height>
        </rect>
       </property>
       <property name="title">
@@ -155,8 +129,8 @@
       <widget class="QPushButton" name="addRecord">
        <property name="geometry">
         <rect>
-         <x>70</x>
-         <y>300</y>
+         <x>80</x>
+         <y>320</y>
          <width>131</width>
          <height>51</height>
         </rect>
@@ -254,7 +228,7 @@
         <x>30</x>
         <y>50</y>
         <width>801</width>
-        <height>521</height>
+        <height>591</height>
        </rect>
       </property>
       <property name="title">
@@ -276,6 +250,32 @@
         <string/>
        </property>
       </widget>
+      <widget class="QPushButton" name="captureButton">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>510</y>
+         <width>131</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Record</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="recordingLabel">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>520</y>
+         <width>101</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>RECORDING</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
@@ -283,7 +283,7 @@
         <x>850</x>
         <y>50</y>
         <width>281</width>
-        <height>121</height>
+        <height>161</height>
        </rect>
       </property>
       <property name="title">
