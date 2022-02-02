@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <Windows.h>
 class CustomTabStyle : public QProxyStyle
 {
 public:
@@ -753,5 +754,24 @@ void MainWindow::on_pushButton_clicked()
 //    process.start("vbs", args);
 
     write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 24.0, Size(1920, 1080), true);
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+//    QProcess process(this);
+//    process.setProgram("cmd");
+//    QStringList argument;
+//    argument<<"wscript C:\\Users\\zlf97\\Downloads\\compute.vbs";
+//    process.setArguments(argument);
+//    process.start();
+
+//    process.waitForStarted();
+//    process.waitForFinished();
+
+//    QString temp = QString::fromLocal8Bit(process.readAllStandardError());
+//    qDebug()<<temp;
+    QString cmd = "wscript C:\\Users\\zlf97\\Downloads\\compute.vbs";
+    WinExec(cmd.toLocal8Bit().data(), SW_NORMAL);
 }
 
