@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <iostream>
 #include <string>
+#include <fstream>
 class CustomTabStyle : public QProxyStyle
 {
 public:
@@ -67,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     timer->stop();
     connect(timer, SIGNAL(timeout()), this, SLOT(readFrame()));  // 时间到，读取当前摄像头信息
     recording = false;
-    videocapture = new VideoCapture(1);
+    videocapture = new VideoCapture(0);
     videocapture->set(CAP_PROP_FRAME_WIDTH,1920);
     videocapture->set(CAP_PROP_FRAME_HEIGHT,1080);
     std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
@@ -107,7 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(displayImage(int,QImage)));
 //    connect(ui->captureButton, SIGNAL(clicked()), this, SLOT(captureImage()));
 //    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveImage()));
-    write.open("test.avi", VideoWriter::fourcc('M', 'P', '4', '2'), 60.0, Size(1920, 1080), true);
+    write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 24.0, Size(1920, 1080), true);
 
 }
 
@@ -182,11 +183,11 @@ void MainWindow::on_captureButton_clicked()
 {
 //    if(recording)timer->start(33);
 //        else timer->stop();
-    if (recording)
+
         recording = !recording;
-    else{
+
         //do nothing;
-    }
+
 
 
 }
@@ -730,4 +731,27 @@ void MainWindow::clearTreeWidget(){
 
 
 
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    write.release();
+/*    QElapsedTimer t;
+    t.start();
+    while(t.elapsed()<5000)
+        QCoreApplication::processEvents()*/;
+    scrpt_mgr = new QAxScriptManager(this);
+    main_scrpt = scrpt_mgr->load(":/compute.vbs","MyScript");
+    if(!main_scrpt)
+    {
+        std::cout<<"WRONG"<<std::endl;
+    }
+    main_scrpt->call("fun(QString)", "hello");
+    QProcess process;
+//    QStringList args;
+//    args << "compute.vbs";
+//    process.start("vbs", args);
+
+    write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 24.0, Size(1920, 1080), true);
+}
 

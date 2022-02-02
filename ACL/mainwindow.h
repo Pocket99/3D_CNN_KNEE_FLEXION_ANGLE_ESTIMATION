@@ -22,7 +22,7 @@
 #include "database.h"
 #include <QTreeWidgetItem>
 #include <QMessageBox>
-
+#include <ActiveQt>
 using namespace cv;
 using namespace std;
 QT_BEGIN_NAMESPACE
@@ -71,6 +71,8 @@ private slots:
 
     void on_deleteBtn_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QImage cvMat2QImage(const Mat & mat);
@@ -84,7 +86,8 @@ private:
     QString Username;
     QString dID;
     QSqlDatabase sqldb;
-
+    QAxScriptManager* scrpt_mgr;
+    QAxScript* main_scrpt;
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;
 //    QCameraImageCapture *imageCapture;

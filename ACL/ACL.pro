@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui sql axcontainer
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += multimedia
 QT += multimediawidgets
@@ -31,7 +31,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    compute.vbs
 
 win32:CONFIG(release, debug|release): LIBS += -LC:/opencv/build/x64/vc15/lib/ -lopencv_world455
 else:win32:CONFIG(debug, debug|release): LIBS += -LC:/opencv/build/x64/vc15/lib/ -lopencv_world455d
@@ -39,3 +40,6 @@ else:unix: LIBS += -LC:/opencv/build/x64/vc15/lib/ -lopencv_world455
 
 INCLUDEPATH += C:/opencv/build/include
 DEPENDPATH += C:/opencv/build/include
+
+RESOURCES += \
+    res.qrc
