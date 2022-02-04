@@ -45,7 +45,7 @@ public:
     void initPatientList();
     QTreeWidget getTreeWidget();
     void clearTreeWidget();
-
+    inline bool exists_file (const std::string& name);
 
 private slots:
 //    void displayImage(int , QImage image);
@@ -75,11 +75,15 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_playOutput_clicked();
+
+    void outputFrame();
 private:
     Ui::MainWindow *ui;
     QImage cvMat2QImage(const Mat & mat);
     Mat QImage2cvMat(QImage image);
     QTimer *timer;
+    QTimer* playTimer;
     bool recording;
     VideoCapture *videocapture;
     VideoWriter write;
@@ -90,6 +94,9 @@ private:
     QSqlDatabase sqldb;
     QAxScriptManager* scrpt_mgr;
     QAxScript* main_scrpt;
+    VideoCapture outputVideo;
+    Mat sourceFrame;
+
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;
 //    QCameraImageCapture *imageCapture;

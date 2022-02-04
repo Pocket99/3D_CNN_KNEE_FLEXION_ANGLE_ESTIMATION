@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <Windows.h>
+
 class CustomTabStyle : public QProxyStyle
 {
 public:
@@ -67,16 +68,19 @@ MainWindow::MainWindow(QWidget *parent)
     /*camera*/
     timer = new QTimer(this);
     timer->stop();
+
     connect(timer, SIGNAL(timeout()), this, SLOT(readFrame()));  // 时间到，读取当前摄像头信息
+    timer->start(1000/60);
     recording = false;
-    videocapture = new VideoCapture(0);
-    videocapture->set(CAP_PROP_FRAME_WIDTH,1920);
-    videocapture->set(CAP_PROP_FRAME_HEIGHT,1080);
-    std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
-    std::cout<<"height"<<videocapture->get(CAP_PROP_FRAME_HEIGHT)<<std::endl;
+    videocapture = new VideoCapture(1);
 
-    timer->start(33);
+//    videocapture->set(CAP_PROP_FRAME_WIDTH,1280);
+//    videocapture->set(CAP_PROP_FRAME_HEIGHT,720);
+//    std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
+//    std::cout<<"height"<<videocapture->get(CAP_PROP_FRAME_HEIGHT)<<std::endl;
 
+
+    write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
@@ -109,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(displayImage(int,QImage)));
 //    connect(ui->captureButton, SIGNAL(clicked()), this, SLOT(captureImage()));
 //    connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveImage()));
-    write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 24.0, Size(1920, 1080), true);
+
 
 }
 
@@ -200,6 +204,7 @@ void MainWindow::readFrame()
         write.write(matFrame);
         ui->recordingLabel->setVisible(true);
         ui->recordingLabel->setStyleSheet("QLabel { background-color : red; color : blue; }");
+
     }else{
         ui->recordingLabel->setVisible(false);
     }
@@ -727,7 +732,13 @@ void MainWindow::clearTreeWidget(){
               delete item;
               --i;
            }
-        }
+    }
+}
+
+bool MainWindow::exists_file(const string &name)
+{
+    struct stat buffer;
+      return (stat (name.c_str(), &buffer) == 0);
 }
 
 
@@ -741,19 +752,19 @@ void MainWindow::on_pushButton_clicked()
     t.start();
     while(t.elapsed()<5000)
         QCoreApplication::processEvents()*/;
-    scrpt_mgr = new QAxScriptManager(this);
-    main_scrpt = scrpt_mgr->load(":/compute.vbs","MyScript");
-    if(!main_scrpt)
-    {
-        std::cout<<"WRONG"<<std::endl;
-    }
-    main_scrpt->call("fun(QString)", "hello");
-    QProcess process;
+//    scrpt_mgr = new QAxScriptManager(this);
+//    main_scrpt = scrpt_mgr->load(":/compute.vbs","MyScript");
+//    if(!main_scrpt)
+//    {
+//        std::cout<<"WRONG"<<std::endl;
+//    }
+//    main_scrpt->call("fun(QString)", "hello");
+//    QProcess process;
 //    QStringList args;
 //    args << "compute.vbs";
 //    process.start("vbs", args);
 
-    write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 24.0, Size(1920, 1080), true);
+    //
 }
 
 
@@ -771,7 +782,33 @@ void MainWindow::on_pushButton_2_clicked()
 
 //    QString temp = QString::fromLocal8Bit(process.readAllStandardError());
 //    qDebug()<<temp;
-    QString cmd = "wscript C:\\Users\\zlf97\\Downloads\\compute.vbs";
+    QString cmd = "wscript compute.vbs";
     WinExec(cmd.toLocal8Bit().data(), SW_NORMAL);
+
+    //write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 24.0, Size(1280, 720), true);
+}
+
+
+void MainWindow::on_playOutput_clicked()
+{
+    if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
+        outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
+        playTimer = new QTimer(this);
+        connect(playTimer,SIGNAL(timeout()),this,SLOT(outputFrame()));
+        playTimer->start(42);
+    }else{
+        QMessageBox::information(this,"Warning","The video is still processing");
+    }
+
+}
+
+void MainWindow::outputFrame()
+{
+   outputVideo>>sourceFrame; //从视频取帧
+   if(!sourceFrame.data)
+      playTimer->stop();//如果取不到数据，终止计时器
+   QImage qimg = QImage((const uchar*)sourceFrame.data,sourceFrame.cols,sourceFrame.rows, QImage::Format_RGB888); //简单地转换一下为Image对象，rgbSwapped是为了显示效果色彩好一些。
+    //ui->label->clear();
+     ui->outputPlay->setPixmap(QPixmap::fromImage(qimg));
 }
 

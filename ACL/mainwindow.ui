@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>720</height>
+    <width>1583</width>
+    <height>1069</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1250</width>
-      <height>700</height>
+      <width>1571</width>
+      <height>1031</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -240,10 +240,10 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>40</x>
          <y>30</y>
-         <width>761</width>
-         <height>471</height>
+         <width>720</width>
+         <height>405</height>
         </rect>
        </property>
        <property name="text">
@@ -367,6 +367,32 @@
         <string>ACL Risk Here</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="playOutput">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>810</y>
+        <width>93</width>
+        <height>29</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Play</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="outputPlay">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>660</y>
+        <width>1241</width>
+        <height>311</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
@@ -604,7 +630,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1280</width>
+     <width>1583</width>
      <height>26</height>
     </rect>
    </property>
