@@ -46,6 +46,7 @@ public:
     QTreeWidget getTreeWidget();
     void clearTreeWidget();
     inline bool exists_file (const std::string& name);
+    void setResults();
 
 private slots:
 //    void displayImage(int , QImage image);
@@ -96,6 +97,7 @@ private:
     QAxScript* main_scrpt;
     VideoCapture outputVideo;
     Mat sourceFrame;
+    QFileSystemWatcher m_fileSystemWatcher;
 
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;

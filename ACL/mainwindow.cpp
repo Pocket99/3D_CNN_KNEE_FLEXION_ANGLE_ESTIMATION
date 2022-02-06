@@ -79,8 +79,10 @@ MainWindow::MainWindow(QWidget *parent)
 //    std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
 //    std::cout<<"height"<<videocapture->get(CAP_PROP_FRAME_HEIGHT)<<std::endl;
 
-
     write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+    //QFileSystemWatcher m_fileSystemWatcher = new QFileSystemWatcher();
+    //m_fileSystemWatcher->addPath("C:\Users\zlf97\My Drive\VideoPoseVideos");
+    //connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(on_playOutput_clicked()));
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
@@ -347,11 +349,11 @@ void MainWindow::retreiveRecords(QString id, QTreeWidgetItem *root){
                 child1->setText(0,"Record#"+query.value(0).toString());
                 child1->setText(1,"Test Location: "+query.value(1).toString());
                 child1->setText(2,"Test Date: "+query.value(2).toString());
-                QString lDetails = query.value(5).toString()+" / "+query.value(4).toString();
+                QString lDetails = query.value(4).toString()+" / "+query.value(5).toString();
                 child1->setText(3,lDetails);
-                QString rDetails = query.value(7).toString()+" / "+query.value(6).toString();
+                QString rDetails = query.value(6).toString()+" / "+query.value(7).toString();
                 child1->setText(4,rDetails);
-                child1->setText(5,query.value(8).toString());
+                child1->setText(5,query.value(8).toString()+"%");
                 root->addChild(child1);
             }
         }
@@ -533,9 +535,11 @@ void MainWindow::on_addBtn_clicked()
 
 void MainWindow::on_deleteBtn_clicked()
 {
-    QSqlQuery query(sqldb);
     QTreeWidgetItem *sel_item = ui->treeWidget->currentItem();
     int count = sel_item->childCount();
+    QSqlQuery query(sqldb);
+//    QTreeWidgetItem *sel_item = ui->treeWidget->currentItem();
+//    int count = sel_item->childCount();
     if(count==0){
         QMessageBox::StandardButton reply;
           reply = QMessageBox::question(this, "Warning", "Are you sure you want to delete the selected Record?",
@@ -686,6 +690,11 @@ void MainWindow::on_addRecord_clicked()
 {
     QString location= "", date = "0000-00-00";
     int pID= 0;
+    QString lMin = "";
+    QString lMax = "";
+    QString rMin = "";
+    QString rMax = "";
+    QString risk = "";
     QString patient_name = ui->patientList->currentText();
     qDebug().noquote()<<"patient name"<<patient_name;
     QString queryscript = QString("SELECT pID FROM Patients WHERE pFirstName ='%1'").arg(patient_name);
@@ -703,8 +712,13 @@ void MainWindow::on_addRecord_clicked()
     /**/
     location = ui->locationEdit->text();
     date = ui->dateEdit->text();
-    qDebug().noquote()<<"pID"<<pID<<"location"<<location<<"date"<<date;
-    queryscript = QString("INSERT INTO `COEN490`.`Records` (`location`, `rDate`, `pID`) VALUES ('%1', '%2', '%3');").arg(location).arg(date).arg(pID);
+    lMin = ui->lMin->text();
+    lMax = ui->lMax->text();
+    rMin = ui->rMin->text();
+    rMax = ui->rMax->text();
+    risk = ui->aclRisk->text();
+    qDebug().noquote()<<"pID"<<pID<<"location"<<location<<"date"<<date<<" L:"<<lMin+"/"+lMax<<" R:"<<rMin+"/"+rMax;
+    queryscript = QString("INSERT INTO `COEN490`.`Records` (`location`, `rDate`, `pID`, `lMin`, `lMax`, `rMin`, `rMax`, `risk`) VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8');").arg(location).arg(date).arg(pID).arg(lMin).arg(lMax).arg(rMin).arg(rMax).arg(risk);
     if(!query.exec(queryscript)){
         //qDebug()<<query.lastError().text();
         QMessageBox::information(this,"Failed","New Record Add Failed");
@@ -799,11 +813,13 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_playOutput_clicked()
 {
+
     if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
         outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
         playTimer = new QTimer(this);
         connect(playTimer,SIGNAL(timeout()),this,SLOT(outputFrame()));
         playTimer->start(42);
+        setResults();
     }else{
         QMessageBox::information(this,"Warning","The video is still processing");
     }
@@ -818,5 +834,28 @@ void MainWindow::outputFrame()
    QImage qimg = QImage((const uchar*)sourceFrame.data,sourceFrame.cols,sourceFrame.rows, QImage::Format_RGB888); //简单地转换一下为Image对象，rgbSwapped是为了显示效果色彩好一些。
     //ui->label->clear();
      ui->outputPlay->setPixmap(QPixmap::fromImage(qimg));
+}
+
+void MainWindow::setResults(){
+    QStringList fields;
+    QFile file("C:\\Users\\zlf97\\My Drive\\Result\\angle.txt");
+    if(!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0, "error", file.errorString());
+    }
+
+    QTextStream in(&file);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        fields += line;
+
+    }
+    qDebug()<<fields[0]<<fields[1]<<fields[2]<<fields[3];
+    ui->lMin->setText(fields[0]);
+    ui->lMax->setText(fields[1]);
+    ui->rMin->setText(fields[2]);
+    ui->rMax->setText(fields[3]);
+
+    file.close();
 }
 

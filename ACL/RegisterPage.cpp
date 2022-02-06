@@ -80,46 +80,74 @@ void RegisterPage::on_registerBtn_clicked()
     QString password = ui->password->text();
     QString firstname = ui->firstName->text();
     QString lastname = ui->lastName->text();
+    QString gender = "";
+    QCheckBox *maleCheckBox = ui->maleCheckBox;
+    QCheckBox *femaleCheckBox = ui->femaleCheckBox;
+    QString email = ui->rEmail->text();
+    QString DOB = ui->rDOB->text();
+    QString phone = ui->rPhoneNum->text();
+    QString address = ui->rAddress->text();
 
-    if(username==NULL || password==NULL || firstname==NULL || lastname==NULL){
-        QMessageBox::information(this,"Register Failed","Please Provide Required Infomation");
+    if(maleCheckBox->isChecked() && femaleCheckBox->isChecked()){
+        maleCheckBox->setChecked(false);
+        femaleCheckBox->setChecked(false);
+        QMessageBox::information(this,"Register Failed","Please Select Only One Gender.");
     }
     else{
-        if(db.open()){
-            QSqlQuery check(QSqlDatabase::database("MyConnect"));
-            QSqlQuery qry(QSqlDatabase::database("MyConnect"));
-            check.prepare(QString("SELECT * FROM Doctors WHERE username = :username"));
-            check.bindValue(":username",username);
-            if(!check.exec()){
-                QMessageBox::information(this,"Failed","Register check Query Failed To Execute");
-            }
-            else {
-                if(check.next()){
-                    QMessageBox::information(this,"Register Failed","Username already in used");
-                    cleanRegUI();
+        if(maleCheckBox->isChecked()){
+            gender = "Male";
+        }
+        else{
+            gender = "Female";
+        }
+
+        if(username==NULL || password==NULL || firstname==NULL || lastname==NULL){
+            QMessageBox::information(this,"Register Failed","Please Provide Required Infomation");
+        }
+        else{
+            if(db.open()){
+                QSqlQuery check(QSqlDatabase::database("MyConnect"));
+                QSqlQuery qry(QSqlDatabase::database("MyConnect"));
+                check.prepare(QString("SELECT * FROM Doctors WHERE username = :username"));
+                check.bindValue(":username",username);
+                if(!check.exec()){
+                    QMessageBox::information(this,"Failed","Register check Query Failed To Execute");
                 }
-                else{
-
-                qry.prepare("INSERT INTO Doctors (username,password,dFirstName,dLastName) VALUES (:username,:password,:firstname,:lastname)");
-                qry.bindValue(":username",username);
-                qry.bindValue(":password",password);
-                qry.bindValue(":firstname",firstname);
-                qry.bindValue(":lastname",lastname);
-
-                    if(qry.exec()){
-                        QMessageBox::information(this,"Inserted","Register Success");
+                else {
+                    if(check.next()){
+                        QMessageBox::information(this,"Register Failed","Username already in used");
                         cleanRegUI();
+                    }
+                    else{
 
-                    }else {
-                        QMessageBox::information(this,"Not Inserted","Data Inserted failed");
+                    qry.prepare("INSERT INTO Doctors (username,password,dFirstName,dLastName,dGender,dEmail,dDOB,dPhone,dAddress) VALUES (:username,:password,:firstname,:lastname,:gender,:email,:DOB,:phone,:address)");
+                    qry.bindValue(":username",username);
+                    qry.bindValue(":password",password);
+                    qry.bindValue(":firstname",firstname);
+                    qry.bindValue(":lastname",lastname);
+                    qry.bindValue(":gender",gender);
+                    qry.bindValue(":email",email);
+                    qry.bindValue(":DOB",DOB);
+                    qry.bindValue(":phone",phone);
+                    qry.bindValue(":address",address);
+
+
+                        if(qry.exec()){
+                            QMessageBox::information(this,"Inserted","Register Success");
+                            cleanRegUI();
+
+                        }else {
+                            QMessageBox::information(this,"Not Inserted","Data Inserted failed");
+                        }
                     }
                 }
             }
-        }
-        else{
-            QMessageBox::information(this,"Not Connected","Database Connected fail");
+            else{
+                QMessageBox::information(this,"Not Connected","Database Connected fail");
+            }
         }
     }
+
 }
 
 
@@ -138,6 +166,19 @@ void RegisterPage::cleanRegUI()
     ui->firstName->setPlaceholderText("First Name");
     ui->lastName->setText("");
     ui->lastName->setPlaceholderText("Last Name");
+    QCheckBox *maleCheckBox = ui->maleCheckBox;
+    QCheckBox *femaleCheckBox = ui->femaleCheckBox;
+    maleCheckBox->setChecked(false);
+    femaleCheckBox->setChecked(false);
+    ui->rEmail->setText("");
+    ui->rEmail->setPlaceholderText("Email Address");
+    ui->rDOB->setText("");
+    ui->rDOB->setPlaceholderText("Date of Birth (YYYY-MM-DD)");
+    ui->rPhoneNum->setText("");
+    ui->rPhoneNum->setPlaceholderText("Phone Number");
+    ui->rAddress->setText("");
+    ui->rAddress->setPlaceholderText("Address");
+
 }
 
 
