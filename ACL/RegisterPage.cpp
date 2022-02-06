@@ -52,7 +52,7 @@ void RegisterPage::on_loginBtn_clicked()
                     mw.getDB();
                     mw.setUsername(username);
                     mw.initPatientList();
-                    QMessageBox::information(this,"Success","Login Success");
+                    //QMessageBox::information(this,"Success","Login Success");
                     hide();
                     mw.show();
 

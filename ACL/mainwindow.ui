@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1583</width>
+    <width>1417</width>
     <height>1069</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1571</width>
+      <width>1401</width>
       <height>1031</height>
      </rect>
     </property>
@@ -44,7 +44,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -240,9 +240,9 @@
        </property>
        <property name="geometry">
         <rect>
-         <x>40</x>
-         <y>30</y>
-         <width>720</width>
+         <x>140</x>
+         <y>50</y>
+         <width>531</width>
          <height>405</height>
         </rect>
        </property>
@@ -253,7 +253,7 @@
       <widget class="QPushButton" name="captureButton">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>100</x>
          <y>510</y>
          <width>131</width>
          <height>51</height>
@@ -266,7 +266,7 @@
       <widget class="QLabel" name="recordingLabel">
        <property name="geometry">
         <rect>
-         <x>270</x>
+         <x>260</x>
          <y>510</y>
          <width>101</width>
          <height>41</height>
@@ -279,7 +279,7 @@
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
-         <x>410</x>
+         <x>400</x>
          <y>510</y>
          <width>111</width>
          <height>51</height>
@@ -292,7 +292,7 @@
       <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
-         <x>600</x>
+         <x>590</x>
          <y>510</y>
          <width>111</width>
          <height>51</height>
@@ -371,7 +371,7 @@
      <widget class="QPushButton" name="playOutput">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>30</x>
         <y>810</y>
         <width>93</width>
         <height>29</height>
@@ -384,9 +384,9 @@
      <widget class="QLabel" name="outputPlay">
       <property name="geometry">
        <rect>
-        <x>170</x>
+        <x>130</x>
         <y>660</y>
-        <width>1241</width>
+        <width>1231</width>
         <height>311</height>
        </rect>
       </property>
@@ -535,9 +535,9 @@
       <widget class="QTreeWidget" name="treeWidget">
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>20</x>
          <y>30</y>
-         <width>791</width>
+         <width>811</width>
          <height>391</height>
         </rect>
        </property>
@@ -545,7 +545,7 @@
         <number>0</number>
        </property>
        <attribute name="headerDefaultSectionSize">
-        <number>300</number>
+        <number>280</number>
        </attribute>
       </widget>
      </widget>
@@ -630,7 +630,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1583</width>
+     <width>1417</width>
      <height>26</height>
     </rect>
    </property>

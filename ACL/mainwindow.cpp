@@ -299,8 +299,11 @@ void MainWindow::retreivePatients(){
 
         ui->treeWidget->setColumnCount(3);
         QStringList labels;
-        labels << "First Name" << "Last Name" << "Date of Birth";
+        labels << "First Name" << "Last Name" << "Date of Birth"<<"Left Knee Angle(Min/Max)"<<"Right Knee Angle(Min/Max)"<<"ACL Risk";
         ui->treeWidget->setHeaderLabels(labels);
+        ui->treeWidget->header()->resizeSection(3, 220);
+        ui->treeWidget->header()->resizeSection(4, 220);
+        ui->treeWidget->header()->resizeSection(5, 100);
 
         if(sqldb.open()){
         QString queryscript = "SELECT * FROM Patients WHERE docID =";
@@ -344,6 +347,11 @@ void MainWindow::retreiveRecords(QString id, QTreeWidgetItem *root){
                 child1->setText(0,"Record#"+query.value(0).toString());
                 child1->setText(1,"Test Location: "+query.value(1).toString());
                 child1->setText(2,"Test Date: "+query.value(2).toString());
+                QString lDetails = query.value(5).toString()+" / "+query.value(4).toString();
+                child1->setText(3,lDetails);
+                QString rDetails = query.value(7).toString()+" / "+query.value(6).toString();
+                child1->setText(4,rDetails);
+                child1->setText(5,query.value(8).toString());
                 root->addChild(child1);
             }
         }
