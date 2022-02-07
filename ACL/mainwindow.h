@@ -79,6 +79,9 @@ private slots:
     void on_playOutput_clicked();
 
     void outputFrame();
+
+    void on_cameraOnBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     QImage cvMat2QImage(const Mat & mat);
@@ -97,7 +100,8 @@ private:
     QAxScript* main_scrpt;
     VideoCapture outputVideo;
     Mat sourceFrame;
-    QFileSystemWatcher m_fileSystemWatcher;
+    QFileSystemWatcher* m_fileSystemWatcher;
+    bool camOn;
 
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;

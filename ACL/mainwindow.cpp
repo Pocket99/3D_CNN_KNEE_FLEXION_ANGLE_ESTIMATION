@@ -72,17 +72,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(readFrame()));  // 时间到，读取当前摄像头信息
     timer->start(1000/60);
     recording = false;
-    videocapture = new VideoCapture(1);
+    camOn = false;
 
+    videocapture = new VideoCapture(-1);
+    write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
 //    videocapture->set(CAP_PROP_FRAME_WIDTH,1280);
 //    videocapture->set(CAP_PROP_FRAME_HEIGHT,720);
 //    std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
 //    std::cout<<"height"<<videocapture->get(CAP_PROP_FRAME_HEIGHT)<<std::endl;
 
-    write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
-    //QFileSystemWatcher m_fileSystemWatcher = new QFileSystemWatcher();
-    //m_fileSystemWatcher->addPath("C:\Users\zlf97\My Drive\VideoPoseVideos");
-    //connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(on_playOutput_clicked()));
+
+    m_fileSystemWatcher = new QFileSystemWatcher();
+    m_fileSystemWatcher->addPath("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos");
+    connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(on_playOutput_clicked()));
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
@@ -192,7 +194,8 @@ void MainWindow::on_captureButton_clicked()
 //        else timer->stop();
 
         recording = !recording;
-
+        write.release();
+        write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
         //do nothing;
 
 
@@ -821,7 +824,7 @@ void MainWindow::on_playOutput_clicked()
         playTimer->start(42);
         setResults();
     }else{
-        QMessageBox::information(this,"Warning","The video is still processing");
+        //QMessageBox::information(this,"Warning","The video is still processing");
     }
 
 }
@@ -857,5 +860,18 @@ void MainWindow::setResults(){
     ui->rMax->setText(fields[3]);
 
     file.close();
+}
+
+
+void MainWindow::on_cameraOnBtn_clicked()
+{
+    if(!camOn){
+        videocapture = new VideoCapture(1);
+        //write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+    }
+    else{
+        videocapture = new VideoCapture(-1);
+    }
+    camOn = !camOn;
 }
 
