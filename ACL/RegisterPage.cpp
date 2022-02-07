@@ -6,6 +6,8 @@ RegisterPage::RegisterPage(QWidget *parent) :
     ui(new Ui::RegisterPage)
 {
     ui->setupUi(this);
+    dw.setWindowFlags(dw.windowFlags() | Qt::WindowStaysOnTopHint);
+    //dw.show();
     db = QSqlDatabase::addDatabase("QMYSQL","MyConnect");
     db.setHostName("sh-cynosdbmysql-grp-7530641o.sql.tencentcdb.com");//IP address
     db.setPort(29339);
@@ -21,7 +23,7 @@ RegisterPage::~RegisterPage()
 
 void RegisterPage::on_loginBtn_clicked()
 {
-
+    //dw.show();
     QString username = ui->loginUsername->text();
     QString password = ui->loginPassword->text();
 
@@ -56,7 +58,7 @@ void RegisterPage::on_loginBtn_clicked()
                     //QMessageBox::information(this,"Success","Login Success");
                     hide();
                     mw.show();
-
+                    //dw.hide();
 
                 }
                 else {
@@ -70,7 +72,7 @@ void RegisterPage::on_loginBtn_clicked()
     }
 }
 
-
+    //dw.hide();
 }
 
 

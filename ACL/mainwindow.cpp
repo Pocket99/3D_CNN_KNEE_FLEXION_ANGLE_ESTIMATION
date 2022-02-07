@@ -76,6 +76,10 @@ MainWindow::MainWindow(QWidget *parent)
     camOn = false;
 
     videocapture = new VideoCapture(-1);
+
+    ui->ImageCapture->setStyleSheet("background-image: url(camera_icon.jpg);");
+    ui->outputPlay->setStyleSheet("background-image: url(video_icon.png);");
+
     //write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
 //    videocapture->set(CAP_PROP_FRAME_WIDTH,1280);
 //    videocapture->set(CAP_PROP_FRAME_HEIGHT,720);
@@ -860,7 +864,7 @@ void MainWindow::setResults(){
 
 
 void MainWindow::on_cameraOnBtn_clicked()
-{
+{   //dw.show();
     if(!camOn){
         videocapture = new VideoCapture(1);
         //write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
