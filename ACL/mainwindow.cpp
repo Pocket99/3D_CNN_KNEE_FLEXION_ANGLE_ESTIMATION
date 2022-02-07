@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
     camOn = false;
 
     videocapture = new VideoCapture(-1);
-    write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+    //write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
 //    videocapture->set(CAP_PROP_FRAME_WIDTH,1280);
 //    videocapture->set(CAP_PROP_FRAME_HEIGHT,720);
 //    std::cout<<"width"<<videocapture->get(CAP_PROP_FRAME_WIDTH)<<std::endl;
@@ -83,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     m_fileSystemWatcher = new QFileSystemWatcher();
-    m_fileSystemWatcher->addPath("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos");
+    m_fileSystemWatcher->addPath("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos");
     connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(on_playOutput_clicked()));
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
@@ -192,10 +192,16 @@ void MainWindow::on_captureButton_clicked()
 {
 //    if(recording)timer->start(33);
 //        else timer->stop();
+    recording = !recording;
 
-        recording = !recording;
+    if(recording){
+        std::cout<<"recording"<<std::endl;
+        write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+    }else{
+        std::cout<<"release"<<std::endl;
         write.release();
-        write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+    }
+
         //do nothing;
 
 
@@ -816,9 +822,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_playOutput_clicked()
 {
-
-    if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
-        outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
+    if(exists_file("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\output.mp4")){
+        outputVideo = VideoCapture("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\output.mp4");
         playTimer = new QTimer(this);
         connect(playTimer,SIGNAL(timeout()),this,SLOT(outputFrame()));
         playTimer->start(42);
@@ -841,7 +846,7 @@ void MainWindow::outputFrame()
 
 void MainWindow::setResults(){
     QStringList fields;
-    QFile file("C:\\Users\\zlf97\\My Drive\\Result\\angle.txt");
+    QFile file("C:\\Users\\leoqi\\我的云端硬盘\\Result\\angle.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "error", file.errorString());
     }
@@ -866,7 +871,7 @@ void MainWindow::setResults(){
 void MainWindow::on_cameraOnBtn_clicked()
 {
     if(!camOn){
-        videocapture = new VideoCapture(1);
+        videocapture = new VideoCapture(0);
         //write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
     }
     else{
