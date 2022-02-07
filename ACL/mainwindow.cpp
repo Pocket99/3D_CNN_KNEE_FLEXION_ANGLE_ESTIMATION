@@ -64,8 +64,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->tabWidget->tabBar()->setStyle(new CustomTabStyle);
+    QMovie *movie = new QMovie("loading1.gif");
+    ui->lbl_gif->setMovie(movie);
+    movie->start();
+    ui->lbl_gif->setVisible(false);
+    ui->lbl_txt->setVisible(false);
     //setWindowState(Qt::WindowMaximized);//max
-
+    //dw.setWindowFlags(dw.windowFlags() | Qt::WindowStaysOnTopHint);
     /*camera*/
     timer = new QTimer(this);
     timer->stop();
@@ -197,14 +202,19 @@ void MainWindow::on_captureButton_clicked()
 {
 //    if(recording)timer->start(33);
 //        else timer->stop();
-    recording = !recording;
+    if(camOn){
+        recording = !recording;
 
-    if(recording){
-        std::cout<<"recording"<<std::endl;
-        write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
-    }else{
-        std::cout<<"release"<<std::endl;
-        write.release();
+        if(recording){
+            std::cout<<"recording"<<std::endl;
+            write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+        }else{
+            std::cout<<"release"<<std::endl;
+            write.release();
+        }
+    }
+    else{
+        QMessageBox::information(this,"Warning","Please Turn on Camera First.");
     }
 
         //do nothing;
@@ -782,32 +792,36 @@ bool MainWindow::exists_file(const string &name)
 
 
 void MainWindow::on_pushButton_clicked()
-{   outputVideo.release();
-    QFile fileTemp("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
+{
+    QMessageBox::StandardButton reply;
+    QString ifadd = "Confirm Delete Output Video.";
+      reply = QMessageBox::question(this, "Warning", ifadd,
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          outputVideo.release();
+          QFile fileTemp("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
 
-    if(fileTemp.remove()){
-        QMessageBox::information(this,"Success","Video Deleted");
-    }
-    else{
-        QMessageBox::information(this,"Failed","Video Delete Failed");
-    }
+          if(fileTemp.remove()){
+              QMessageBox::information(this,"Success","Video Deleted");
+          }
+          else{
+              QMessageBox::information(this,"Failed","Video Delete Failed");
+          }
+      }
+      else{
+          //do nothing
+      }
+
 }
 
 
 void MainWindow::on_pushButton_2_clicked()
 {
-//    QProcess process(this);
-//    process.setProgram("cmd");
-//    QStringList argument;
-//    argument<<"wscript C:\\Users\\zlf97\\Downloads\\compute.vbs";
-//    process.setArguments(argument);
-//    process.start();
 
-//    process.waitForStarted();
-//    process.waitForFinished();
-
-//    QString temp = QString::fromLocal8Bit(process.readAllStandardError());
 //    qDebug()<<temp;
+    //dw.show();
+    ui->lbl_gif->setVisible(true);
+    ui->lbl_txt->setVisible(true);
     QString cmd = "wscript compute.vbs";
     WinExec(cmd.toLocal8Bit().data(), SW_NORMAL);
 
@@ -816,7 +830,9 @@ void MainWindow::on_pushButton_2_clicked()
 
 
 void MainWindow::on_playOutput_clicked()
-{
+{   //dw.hide();
+    ui->lbl_gif->setVisible(false);
+    ui->lbl_txt->setVisible(false);
     if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
         outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
         playTimer = new QTimer(this);

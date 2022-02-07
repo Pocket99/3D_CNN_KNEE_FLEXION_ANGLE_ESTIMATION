@@ -254,20 +254,20 @@
        <property name="geometry">
         <rect>
          <x>670</x>
-         <y>150</y>
+         <y>200</y>
          <width>141</width>
          <height>51</height>
         </rect>
        </property>
        <property name="text">
-        <string>Record</string>
+        <string>Start/Finish</string>
        </property>
       </widget>
       <widget class="QLabel" name="recordingLabel">
        <property name="geometry">
         <rect>
          <x>690</x>
-         <y>200</y>
+         <y>250</y>
          <width>101</width>
          <height>41</height>
         </rect>
@@ -276,24 +276,11 @@
         <string>RECORDING</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
-       <property name="geometry">
-        <rect>
-         <x>670</x>
-         <y>260</y>
-         <width>141</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Release</string>
-       </property>
-      </widget>
       <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
          <x>670</x>
-         <y>370</y>
+         <y>320</y>
          <width>141</width>
          <height>51</height>
         </rect>
@@ -306,13 +293,39 @@
        <property name="geometry">
         <rect>
          <x>670</x>
-         <y>40</y>
+         <y>80</y>
          <width>141</width>
          <height>51</height>
         </rect>
        </property>
        <property name="text">
         <string>On / Off</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_gif">
+       <property name="geometry">
+        <rect>
+         <x>710</x>
+         <y>390</y>
+         <width>60</width>
+         <height>60</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbl_txt">
+       <property name="geometry">
+        <rect>
+         <x>670</x>
+         <y>370</y>
+         <width>191</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Generating Result...</string>
        </property>
       </widget>
      </widget>
@@ -501,13 +514,26 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>180</y>
+         <y>80</y>
          <width>41</width>
          <height>151</height>
         </rect>
        </property>
        <property name="text">
         <string>Play</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>260</y>
+         <width>41</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Del</string>
        </property>
       </widget>
      </widget>
