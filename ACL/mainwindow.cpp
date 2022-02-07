@@ -196,7 +196,7 @@ void MainWindow::on_captureButton_clicked()
 
     if(recording){
         std::cout<<"recording"<<std::endl;
-        write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+        write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
     }else{
         std::cout<<"release"<<std::endl;
         write.release();
@@ -778,24 +778,14 @@ bool MainWindow::exists_file(const string &name)
 
 void MainWindow::on_pushButton_clicked()
 {
-    write.release();
-/*    QElapsedTimer t;
-    t.start();
-    while(t.elapsed()<5000)
-        QCoreApplication::processEvents()*/;
-//    scrpt_mgr = new QAxScriptManager(this);
-//    main_scrpt = scrpt_mgr->load(":/compute.vbs","MyScript");
-//    if(!main_scrpt)
-//    {
-//        std::cout<<"WRONG"<<std::endl;
-//    }
-//    main_scrpt->call("fun(QString)", "hello");
-//    QProcess process;
-//    QStringList args;
-//    args << "compute.vbs";
-//    process.start("vbs", args);
+    QFile fileTemp("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
 
-    //
+    if(fileTemp.remove()){
+        QMessageBox::information(this,"Success","Video Deleted");
+    }
+    else{
+        QMessageBox::information(this,"Failed","Video Delete Failed");
+    }
 }
 
 
@@ -871,7 +861,7 @@ void MainWindow::setResults(){
 void MainWindow::on_cameraOnBtn_clicked()
 {
     if(!camOn){
-        videocapture = new VideoCapture(0);
+        videocapture = new VideoCapture(1);
         //write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
     }
     else{

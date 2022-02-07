@@ -299,7 +299,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Cmd_Test</string>
+        <string>Analyze</string>
        </property>
       </widget>
       <widget class="QPushButton" name="cameraOnBtn">
