@@ -49,6 +49,7 @@ void RegisterPage::on_loginBtn_clicked()
 
 //                    ui->loginUsername->setText("");
 //                    ui->loginPassword->setText("");
+                    //dw.show();
                     mw.getDB();
                     mw.setUsername(username);
                     mw.initPatientList();

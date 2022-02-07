@@ -8,6 +8,7 @@
 #include <fstream>
 #include <Windows.h>
 
+
 class CustomTabStyle : public QProxyStyle
 {
 public:
@@ -83,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     m_fileSystemWatcher = new QFileSystemWatcher();
-    m_fileSystemWatcher->addPath("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos");
+    m_fileSystemWatcher->addPath("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos");
     connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(on_playOutput_clicked()));
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
@@ -777,7 +778,7 @@ bool MainWindow::exists_file(const string &name)
 
 
 void MainWindow::on_pushButton_clicked()
-{
+{   outputVideo.release();
     QFile fileTemp("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
 
     if(fileTemp.remove()){
@@ -812,8 +813,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_playOutput_clicked()
 {
-    if(exists_file("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\output.mp4")){
-        outputVideo = VideoCapture("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\output.mp4");
+    if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
+        outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
         playTimer = new QTimer(this);
         connect(playTimer,SIGNAL(timeout()),this,SLOT(outputFrame()));
         playTimer->start(42);
@@ -836,7 +837,7 @@ void MainWindow::outputFrame()
 
 void MainWindow::setResults(){
     QStringList fields;
-    QFile file("C:\\Users\\leoqi\\我的云端硬盘\\Result\\angle.txt");
+    QFile file("C:\\Users\\zlf97\\My Drive\\Result\\angle.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "error", file.errorString());
     }

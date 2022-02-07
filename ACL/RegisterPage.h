@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QDialog>
 #include <QtSql>
+#include <dlgwait.h>
 
 #include <mainwindow.h>
 
@@ -35,6 +36,7 @@ private:
     Ui::RegisterPage *ui;
     MainWindow mw;
     QSqlDatabase db;
+    DlgWait dw;
 };
 
 #endif // REGISTERPAGE_H

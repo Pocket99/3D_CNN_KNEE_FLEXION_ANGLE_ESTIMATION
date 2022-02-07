@@ -23,6 +23,7 @@
 #include <QTreeWidgetItem>
 #include <QMessageBox>
 #include <ActiveQt>
+#include <dlgwait.h>
 using namespace cv;
 using namespace std;
 QT_BEGIN_NAMESPACE
@@ -102,6 +103,7 @@ private:
     Mat sourceFrame;
     QFileSystemWatcher* m_fileSystemWatcher;
     bool camOn;
+    DlgWait dw;
 
 //    QCamera *camera;
 //    QCameraViewfinder *viewfinder;
