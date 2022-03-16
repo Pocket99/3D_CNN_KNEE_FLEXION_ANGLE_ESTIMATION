@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23139c7e-8e7a-4c9e-a9e2-65948bd7525f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ACL/ACL.pro" beforeDir="false" afterPath="$PROJECT_DIR$/../ACL/ACL.pro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ACL/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ACL/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ACL/mainwindow.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../ACL/mainwindow.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ACL/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/../ACL/mainwindow.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
