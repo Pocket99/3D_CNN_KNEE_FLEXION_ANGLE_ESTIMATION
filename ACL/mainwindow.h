@@ -73,15 +73,19 @@ private slots:
 
     void on_deleteBtn_clicked();
 
-    void on_pushButton_clicked();
+    void on_outputDeleteBtn_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_analyzeBtn_clicked();
 
     void on_playOutput_clicked();
 
     void outputFrame();
 
     void on_cameraOnBtn_clicked();
+
+    void on_downloadButton_clicked();
+
+    void set_invisible();
 
 private:
     Ui::MainWindow *ui;

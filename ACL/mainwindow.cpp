@@ -18,8 +18,8 @@ public:
         QSize s = QProxyStyle::sizeFromContents(type, option, size, widget);
         if (type == QStyle::CT_TabBarTab) {
             s.transpose();
-            s.rwidth() = 90; // 设置每个tabBar中item的大小
-            s.rheight() = 44;
+            s.rwidth() = 120; // 设置每个tabBar中item的大小
+            s.rheight() = 90;
         }
         return s;
     }
@@ -93,8 +93,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     m_fileSystemWatcher = new QFileSystemWatcher();
-    m_fileSystemWatcher->addPath("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos");
-    connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(on_playOutput_clicked()));
+    m_fileSystemWatcher->addPath("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos");//C:\\Users\\zlf97\\My Drive\\VideoPoseVideos
+    connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(set_invisible()));
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     for (const QCameraInfo &cameraInfo : cameras) {
@@ -197,31 +197,6 @@ Mat MainWindow::QImage2cvMat(QImage image)           // QImage改成Mat
 }
 
 
-
-void MainWindow::on_captureButton_clicked()
-{
-//    if(recording)timer->start(33);
-//        else timer->stop();
-    if(camOn){
-        recording = !recording;
-
-        if(recording){
-            std::cout<<"recording"<<std::endl;
-            write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
-        }else{
-            std::cout<<"release"<<std::endl;
-            write.release();
-        }
-    }
-    else{
-        QMessageBox::information(this,"Warning","Please Turn on Camera First.");
-    }
-
-        //do nothing;
-
-
-
-}
 
 void MainWindow::readFrame()
 {
@@ -791,7 +766,7 @@ bool MainWindow::exists_file(const string &name)
 
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_outputDeleteBtn_clicked()
 {
     QMessageBox::StandardButton reply;
     QString ifadd = "Confirm Delete Output Video.";
@@ -815,7 +790,7 @@ void MainWindow::on_pushButton_clicked()
 }
 
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_analyzeBtn_clicked()
 {
 
 //    qDebug()<<temp;
@@ -831,13 +806,14 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_playOutput_clicked()
 {   //dw.hide();
-    ui->lbl_gif->setVisible(false);
-    ui->lbl_txt->setVisible(false);
+    //ui->lbl_gif->setVisible(false);
+    //ui->lbl_txt->setVisible(false);
+
     if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
         outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
         playTimer = new QTimer(this);
         connect(playTimer,SIGNAL(timeout()),this,SLOT(outputFrame()));
-        playTimer->start(42);
+        playTimer->start(1000/30);
         setResults();
     }else{
         //QMessageBox::information(this,"Warning","The video is still processing");
@@ -889,5 +865,48 @@ void MainWindow::on_cameraOnBtn_clicked()
         videocapture = new VideoCapture(-1);
     }
     camOn = !camOn;
+}
+//开始录制视频
+void MainWindow::on_captureButton_clicked()
+{
+//    if(recording)timer->start(33);
+//        else timer->stop();
+
+    if(camOn){
+        recording = !recording;
+
+        if(recording){
+            std::cout<<"recording"<<std::endl;
+            write.open("D:\\490Qt\\build-ACL-Desktop_Qt_5_15_0_MSVC2019_64bit-Debug\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+        }else{
+            std::cout<<"release"<<std::endl;
+            write.release();
+//            QStringList list= {"D:\\490Qt\\google-api\\dist\\compute.vbs",
+//                               "D:\\490Qt\\google-api\\dist\\credentials.json",
+//                               "D:\\490Qt\\google-api\\dist\\token.json",
+//                               "D:\\490Qt\\google-api\\dist\\video.mp4"};
+            QProcess::startDetached( "D:\\490Qt\\google-api\\dist\\quickstart.exe" ,QStringList());
+        }
+    }
+    else{
+        QMessageBox::information(this,"Warning","Please Turn on Camera First.");
+    }
+
+
+
+}
+
+
+void MainWindow::on_downloadButton_clicked()
+{
+   // QProcess::startDetached( "D:\\490Qt\\output\\dist\\download.exe" ,QStringList());
+   //    //QMessageBox::information(this,"Success","download finished");
+}
+
+void MainWindow::set_invisible()
+{
+    ui->lbl_gif->setVisible(false);
+    ui->lbl_txt->setVisible(false);
+    setResults();
 }
 
