@@ -877,15 +877,11 @@ void MainWindow::on_captureButton_clicked()
 
         if(recording){
             std::cout<<"recording"<<std::endl;
-            write.open("D:\\490Qt\\build-ACL-Desktop_Qt_5_15_0_MSVC2019_64bit-Debug\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+            write.open("D:\\490Qt\\3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION\\build-ACL-Desktop_Qt_5_15_0_MSVC2019_64bit-Debug\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
         }else{
             std::cout<<"release"<<std::endl;
             write.release();
-//            QStringList list= {"D:\\490Qt\\google-api\\dist\\compute.vbs",
-//                               "D:\\490Qt\\google-api\\dist\\credentials.json",
-//                               "D:\\490Qt\\google-api\\dist\\token.json",
-//                               "D:\\490Qt\\google-api\\dist\\video.mp4"};
-            QProcess::startDetached( "D:\\490Qt\\google-api\\dist\\quickstart.exe" ,QStringList());
+            QProcess::startDetached( "D:\\490Qt\\3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION\\google-api\\dist\\quickstart.exe" ,QStringList());
         }
     }
     else{
