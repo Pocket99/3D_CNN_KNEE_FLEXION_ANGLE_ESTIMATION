@@ -546,8 +546,8 @@ border-radius: 20px;
         <rect>
          <x>20</x>
          <y>0</y>
-         <width>253</width>
-         <height>185</height>
+         <width>250</width>
+         <height>184</height>
         </rect>
        </property>
        <property name="styleSheet">
