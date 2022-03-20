@@ -6,6 +6,17 @@ RegisterPage::RegisterPage(QWidget *parent) :
     ui(new Ui::RegisterPage)
 {
     ui->setupUi(this);
+    setWindowIcon(QIcon("alc_icon.png"));
+    QPixmap bkgnd("E:/490Qt/3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION/build-ACL-Desktop_Qt_5_15_0_MSVC2019_64bit-Debug/0001-02.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+    QFont font("Microsoft YaHei UI");
+    font.setStyleHint(QFont::Monospace);
+    QApplication::setFont(font);
+    ui->forgetPassLabel->setToolTip("Please Kindly Contact the Develop Team\nfor a Password Change.");
+
     dw.setWindowFlags(dw.windowFlags() | Qt::WindowStaysOnTopHint);
     //dw.show();
     db = QSqlDatabase::addDatabase("QMYSQL","MyConnect");
@@ -184,4 +195,28 @@ void RegisterPage::cleanRegUI()
 
 }
 
+
+
+void RegisterPage::on_maleCheckBox_stateChanged(int arg1)
+{
+    QCheckBox *maleCheckBox = ui->maleCheckBox;
+    QCheckBox *femaleCheckBox = ui->femaleCheckBox;
+
+    if(femaleCheckBox->isChecked()){
+        femaleCheckBox->setChecked(false);
+    }
+}
+
+
+
+void RegisterPage::on_femaleCheckBox_stateChanged(int arg1)
+{
+    QCheckBox *maleCheckBox = ui->maleCheckBox;
+    QCheckBox *femaleCheckBox = ui->femaleCheckBox;
+
+    if(maleCheckBox->isChecked()){
+        maleCheckBox->setChecked(false);
+    }
+
+}
 

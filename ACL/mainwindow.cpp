@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    setWindowIcon(QIcon("alc_icon.png"));
     ui->tabWidget->tabBar()->setStyle(new CustomTabStyle);
     QMovie *movie = new QMovie("loading1.gif");
     ui->lbl_gif->setMovie(movie);
@@ -71,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lbl_txt->setVisible(false);
     //setWindowState(Qt::WindowMaximized);//max
     //dw.setWindowFlags(dw.windowFlags() | Qt::WindowStaysOnTopHint);
+    QFont font("Microsoft YaHei UI");
+    font.setStyleHint(QFont::Monospace);
+    QApplication::setFont(font);
     /*camera*/
     timer = new QTimer(this);
     timer->stop();
@@ -82,8 +85,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     videocapture = new VideoCapture(-1);
 
-    ui->ImageCapture->setStyleSheet("background-image: url(camera_icon.jpg);");
-    ui->outputPlay->setStyleSheet("background-image: url(video_icon.png);");
+    ui->ImageCapture->setStyleSheet("background-image: url(main_cam_icon.png);");
+    ui->outputPlay->setStyleSheet("background-image: url(main_video_icon.png);");
 
     //write.open("C:\\Users\\leoqi\\我的云端硬盘\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
 //    videocapture->set(CAP_PROP_FRAME_WIDTH,1280);
@@ -93,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     m_fileSystemWatcher = new QFileSystemWatcher();
-    m_fileSystemWatcher->addPath("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos");//C:\\Users\\zlf97\\My Drive\\VideoPoseVideos
+    m_fileSystemWatcher->addPath("C:\\Users\\枫枫\\我的云端硬盘\\VideoPoseVideos");//C:\\Users\\zlf97\\My Drive\\VideoPoseVideos
     connect(m_fileSystemWatcher, SIGNAL(directoryChanged(QString)), this, SLOT(set_invisible()));
     /*Databse*/
     /*const QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
@@ -204,7 +207,7 @@ void MainWindow::readFrame()
     if(recording){
         write.write(matFrame);
         ui->recordingLabel->setVisible(true);
-        ui->recordingLabel->setStyleSheet("QLabel { background-color : red; color : blue; }");
+        ui->recordingLabel->setStyleSheet("QLabel { background-color : Green; color : white; border-radius:5px;}");
 
     }else{
         ui->recordingLabel->setVisible(false);
@@ -280,7 +283,9 @@ void MainWindow::setUsername(QString un){
     }else{
         if(query.next()){
             //qDebug() << "Doctor Name: " <<query.value(4).toString();
+            ui->UI_DocName->setStyleSheet("QLabel { color : rgb(85, 170, 255); }");
             ui->UI_DocName->setText(query.value(3).toString());
+            //ui->UI_DocName->setText(query.value(3).toString());
             setdID(query.value(0).toString());
             retreivePatients();
             //setTreeWidget();
@@ -302,9 +307,10 @@ void MainWindow::retreivePatients(){
         QStringList labels;
         labels << "First Name" << "Last Name" << "Date of Birth"<<"Left Knee Angle(Min/Max)"<<"Right Knee Angle(Min/Max)"<<"ACL Risk";
         ui->treeWidget->setHeaderLabels(labels);
+        ui->treeWidget->header()->resizeSection(2, 200);
         ui->treeWidget->header()->resizeSection(3, 220);
         ui->treeWidget->header()->resizeSection(4, 220);
-        ui->treeWidget->header()->resizeSection(5, 100);
+        ui->treeWidget->header()->resizeSection(5, 80);
 
         if(sqldb.open()){
         QString queryscript = "SELECT * FROM Patients WHERE docID =";
@@ -365,12 +371,13 @@ void MainWindow::setdID(QString id){
 
 void MainWindow::on_searchBtn_clicked()
 {   QTreeWidgetItem *item;
-    //item = ui->treeWidget->topLevelItem(0);
+    item = ui->treeWidget->topLevelItem(0);
     QString firstName = ui->hfirstName->text();
     QString lastName = ui->hlastName->text();
     QString dob = ui->hDOB->text();
     //qDebug()<<ui->treeWidget->topLevelItemCount();
     if(firstName == NULL && lastName == NULL && dob == NULL){
+        QMessageBox::information(this,"Search Warning","Please Add Details to Search.");
         delete item;
         retreivePatients();
     }else{
@@ -695,12 +702,12 @@ void MainWindow::on_addRecord_clicked()
     QString rMax = "";
     QString risk = "";
     QString patient_name = ui->patientList->currentText();
-    qDebug().noquote()<<"patient name"<<patient_name;
+    //qDebug().noquote()<<"patient name"<<patient_name;
     QString queryscript = QString("SELECT pID FROM Patients WHERE pFirstName ='%1'").arg(patient_name);
     QSqlQuery query(sqldb);
 
     if(!query.exec(queryscript)){
-        //qDebug()<<query.lastError().text();
+        qDebug()<<query.lastError().text();
         QMessageBox::information(this,"Failed","patient not found");
     }else{
         while(query.next()){
@@ -708,6 +715,7 @@ void MainWindow::on_addRecord_clicked()
         }
 
     }
+    qDebug()<<pID<<endl;
     /**/
     location = ui->locationEdit->text();
     date = ui->dateEdit->text();
@@ -719,7 +727,7 @@ void MainWindow::on_addRecord_clicked()
     qDebug().noquote()<<"pID"<<pID<<"location"<<location<<"date"<<date<<" L:"<<lMin+"/"+lMax<<" R:"<<rMin+"/"+rMax;
     queryscript = QString("INSERT INTO `COEN490`.`Records` (`location`, `rDate`, `pID`, `lMin`, `lMax`, `rMin`, `rMax`, `risk`) VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8');").arg(location).arg(date).arg(pID).arg(lMin).arg(lMax).arg(rMin).arg(rMax).arg(risk);
     if(!query.exec(queryscript)){
-        //qDebug()<<query.lastError().text();
+        qDebug()<<query.lastError().text();
         QMessageBox::information(this,"Failed","New Record Add Failed");
     }else{
         ui->locationEdit->setText("");
@@ -774,7 +782,7 @@ void MainWindow::on_outputDeleteBtn_clicked()
                                     QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
           outputVideo.release();
-          QFile fileTemp("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
+          QFile fileTemp("C:\\Users\\枫枫\\我的云端硬盘\\VideoPoseVideos\\output.mp4");
 
           if(fileTemp.remove()){
               QMessageBox::information(this,"Success","Video Deleted");
@@ -806,11 +814,11 @@ void MainWindow::on_analyzeBtn_clicked()
 
 void MainWindow::on_playOutput_clicked()
 {   //dw.hide();
-    //ui->lbl_gif->setVisible(false);
-    //ui->lbl_txt->setVisible(false);
+    ui->lbl_gif->setVisible(false);
+    ui->lbl_txt->setVisible(false);
 
-    if(exists_file("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4")){
-        outputVideo = VideoCapture("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\output.mp4");
+    if(exists_file("C:\\Users\\枫枫\\我的云端硬盘\\VideoPoseVideos\\output.mp4")){
+        outputVideo = VideoCapture("C:\\Users\\枫枫\\我的云端硬盘\\VideoPoseVideos\\output.mp4");
         playTimer = new QTimer(this);
         connect(playTimer,SIGNAL(timeout()),this,SLOT(outputFrame()));
         playTimer->start(1000/30);
@@ -833,7 +841,7 @@ void MainWindow::outputFrame()
 
 void MainWindow::setResults(){
     QStringList fields;
-    QFile file("C:\\Users\\zlf97\\My Drive\\Result\\angle.txt");
+    QFile file("C:\\Users\\枫枫\\我的云端硬盘\\Result\\angle.txt");
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0, "error", file.errorString());
     }
@@ -858,7 +866,7 @@ void MainWindow::setResults(){
 void MainWindow::on_cameraOnBtn_clicked()
 {   //dw.show();
     if(!camOn){
-        videocapture = new VideoCapture(1);
+        videocapture = new VideoCapture(0);
         //write.open("C:\\Users\\zlf97\\My Drive\\VideoPoseVideos\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
     }
     else{
@@ -877,11 +885,11 @@ void MainWindow::on_captureButton_clicked()
 
         if(recording){
             std::cout<<"recording"<<std::endl;
-            write.open("D:\\490Qt\\3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION\\build-ACL-Desktop_Qt_5_15_0_MSVC2019_64bit-Debug\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
+            write.open("E:\\490Qt\\3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION\\build-ACL-Desktop_Qt_5_15_0_MSVC2019_64bit-Debug\\video.mp4", VideoWriter::fourcc('M', 'P', '4', 'V'), 30.0, Size(videocapture->get(CAP_PROP_FRAME_WIDTH), videocapture->get(CAP_PROP_FRAME_HEIGHT)), true);
         }else{
             std::cout<<"release"<<std::endl;
             write.release();
-            QProcess::startDetached( "D:\\490Qt\\3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION\\google-api\\dist\\quickstart.exe" ,QStringList());
+            QProcess::startDetached( "E:\\490Qt\\3D_CNN_KNEE_FLEXION_ANGLE_ESTIMATION\\google-api\\dist\\quickstart.exe" ,QStringList());
         }
     }
     else{

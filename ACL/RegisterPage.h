@@ -32,6 +32,10 @@ private slots:
     void on_label_4_linkActivated(const QString &link);
 
 
+    void on_maleCheckBox_stateChanged(int arg1);
+
+    void on_femaleCheckBox_stateChanged(int arg1);
+
 private:
     Ui::RegisterPage *ui;
     MainWindow mw;
